@@ -1,0 +1,21 @@
+<% content_for :title, "Users" %>
+<h1>Users</h1>
+
+<div id="users">
+  <table class = "table">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Age</th>
+        <th>Address</th>
+        <th colspan="3"></th>
+      </tr>
+    </thead>
+    <% @users.each do |user| %>
+      <tbody><%= render user %></tbody>
+    <% end %>
+  </table>
+</div>
+
+<%= link_to "New user", new_user_path, class: "btn btn-primary" %>
+<%= link_to "View Post", posts_path, class: "btn btn-primary" %>

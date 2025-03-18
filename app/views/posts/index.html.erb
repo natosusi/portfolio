@@ -1,0 +1,16 @@
+<h1>Posts#index</h1>
+<p>Find me in app/views/posts/index.html.erb</p>
+<div id="posts">
+  <% @posts.each do |post| %>
+    <h2>name</h2>
+    <p><%= post.user.name %></p>
+    <h2>title</h2>
+    <p><%= post.title %></p>
+    <h2>content</h2>
+    <p><%= post.content %></p>
+    <%= link_to 'Show', post , class: "btn btn-primary btn-sm" %>
+    <%= link_to 'Edit', edit_post_path(post) , class: "btn btn-outline-primary btn-sm" %>
+  <% end %>
+</div>
+<%= link_to "New post", new_post_path, class: "btn btn-primary" %>
+<%= link_to "View User", users_path, class: "btn btn-primary" %>
