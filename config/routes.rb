@@ -1,9 +1,9 @@
 Rails.application.routes.draw do
-
-  resources :users, :posts
-  get "login" => "users#login_form"
-  post "login" => "users#login"
-  delete "logout" => "users#logout"
+  
+  resources :users, :loans
+  get "login", to: "sessions#new"
+  post "login", to: "sessions#create"
+  delete "logout", to: "sessions#destroy"
 
 
   get "/" => "home#top"

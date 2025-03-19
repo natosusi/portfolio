@@ -39,7 +39,7 @@
       <% if session[:user_id] %>
         <span class="navbar-text">
           ログイン中:
-          <%= session[:user_id] %>
+          <%= link_to current_user.name, user_path(current_user), class: "nav-link" %>
         </span>
       <% end %>
     </div>
