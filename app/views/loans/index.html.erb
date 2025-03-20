@@ -1,21 +1,16 @@
 <h1>Loans#index</h1>
-<% 
-=begin %>
-<p>Find me in app/views/posts/index.html.erb</p>
-<div id="posts">
-  <% @loans.each do |post| %>
+
+<div id="loans">
+  <% @loans.each do |loan| %>
     <h2>name</h2>
     <p><%= loan.user.name %></p>
     <h2>title</h2>
-    <p><%= loan.title %></p>
-    <h2>content</h2>
-    <p><%= loan.content %></p>
-    <%= link_to 'Show', post , class: "btn btn-primary btn-sm" %>
-    <%= link_to 'Edit', edit_post_path(post) , class: "btn btn-outline-primary btn-sm" %>
+    <p><%= loan.book.title %></p>
+    <h2>borrowed_date</h2>
+    <p><%= loan.borrowed_date %></p>
+    <%= link_to 'Show', loan , class: "btn btn-primary btn-sm" %>
   <% end %>
 </div>
-<%
-=end %>
 
-<%= link_to "New post", new_post_path, class: "btn btn-primary" %>
+
 <%= link_to "View User", users_path, class: "btn btn-primary" %>

@@ -3,7 +3,7 @@ class SessionsController < ApplicationController
   end
 
   def create
-    puts "loginが呼び出された"
+    puts "createが呼び出された"
     #:sessionキーにネストされたフォームからのログイン情報を検索し、userとして返す
     user = User.find_by(name: params[:session][:name],address: params[:session][:address])
     if user
@@ -22,7 +22,7 @@ class SessionsController < ApplicationController
   end
 
   def destroy
-    puts "logoutが呼び出された"
+    puts "destroyが呼び出された"
     log_out
     flash[:notice] = "ログアウト完了"
     redirect_to "/", status: :see_other

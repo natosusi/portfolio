@@ -1,6 +1,7 @@
 module SessionsHelper
   #渡されたユーザーでログインする
   def log_in(user)
+    puts "log_inが呼び出された"
     session[:user_id] = user.id
   end
 
@@ -18,6 +19,7 @@ module SessionsHelper
 
   #ログアウト処理、セッション情報を削除し、@current_userをnilにする
   def log_out
+    puts "log_outが呼び出された"
     reset_session
     @current_user = nil
   end
