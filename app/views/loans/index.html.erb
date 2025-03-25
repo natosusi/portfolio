@@ -11,14 +11,16 @@
       </tr>
     </thead>
     <% @books.each do |book| %>
-      <% latest_loan =  book.latest_loan %>
       <tbody>
         <tr>
           <td><%= book.title %></td>
-          <td><%= latest_loan&.returned_date.nil? ? '貸し出し中' : '貸し出し可能' %></td>
-          <td><%= latest_loan&.schedule_date %></td>
-          <% if latest_loan.nil? || latest_loan.returned_date.present? %>
-          <td><%= link_to "借りる", new_loan_path(id: book.id), class: "btn btn-primary btn-sm" %></td>
+          <td><%= book_available?(book) ? '貸し出し可能' : '貸し出し中' %></td>
+          <td><%= schedule_date_for_loan(book) %></td>
+          <% if book_available?(book) %>
+            <td><%= link_to "借りる", new_loan_path(id: book.id), class: "btn btn-primary btn-sm" %></td>
+          <% elsif latest_loan_user(book) %>
+            <td><%= link_to "返却する", edit_loan_path(id: book.id), class: "btn btn-outline-primary btn-sm" %></td>
+          <% else %>
           <% end %>
         </tr>
       </tbody>
