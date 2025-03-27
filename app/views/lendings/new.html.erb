@@ -1,8 +1,8 @@
-<h1>Loans#new</h1>
-<%= form_with(model: @loan) do |f| %>
-  <p>タイトル: <%= @loan.book.title %></p>
+<h1>Lendings#new</h1>
+<%= form_with(model: @lending) do |f| %>
+  <p>タイトル: <%= @lending.book.title %></p>
   <p>貸出日: <%= Date.current %></p>
-  <p>返却予定日: <%= @loan.schedule_date %></p>
+  <p>返却予定日: <%= @lending.schedule_date %></p>
 
   <%= f.hidden_field :book_id %>
   <%= f.hidden_field :schedule_date %>

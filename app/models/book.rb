@@ -1,9 +1,9 @@
 class Book < ApplicationRecord
-  has_many :loans
+  has_many :lendings
 
-  def latest_loan
+  def latest_lending
     #その本に関連するすべてのloanレコードを取得
     #取得したレコードを新しい順に並べ替え、そこから最新の1件を返す
-    loans.order(created_at: :desc).first
+    lendings.order(created_at: :desc).first
   end
 end

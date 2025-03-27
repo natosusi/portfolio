@@ -1,6 +1,6 @@
-<h1>Loans#index</h1>
+<h1>Lendings#index</h1>
 
-<div id="loans">
+<div id="lendings">
     <table class = "table">
     <thead>
       <tr>
@@ -15,11 +15,11 @@
         <tr>
           <td><%= book.title %></td>
           <td><%= book_available?(book) ? '貸し出し可能' : '貸し出し中' %></td>
-          <td><%= schedule_date_for_loan(book) %></td>
+          <td><%= schedule_date_for_lending(book) %></td>
           <% if book_available?(book) %>
-            <td><%= link_to "借りる", new_loan_path(id: book.id), class: "btn btn-primary btn-sm" %></td>
-          <% elsif latest_loan_user(book) %>
-            <td><%= link_to "返却する", edit_loan_path(id: book.id), class: "btn btn-outline-primary btn-sm" %></td>
+            <td><%= link_to "借りる", new_lending_path(id: book.id), class: "btn btn-primary btn-sm" %></td>
+          <% elsif latest_lending_user(book) %>
+            <td><%= link_to "返却する", edit_lending_path(id: book.id), class: "btn btn-outline-primary btn-sm" %></td>
           <% else %>
           <% end %>
         </tr>
