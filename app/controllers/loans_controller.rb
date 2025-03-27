@@ -4,7 +4,7 @@ class LoansController < ApplicationController
   helper_method :book_available?, :schedule_date_for_loan, :latest_loan_user
 
   def index
-    puts "indexが呼び出された"
+    puts 'indexが呼び出された'
     #booksテーブルとloansテーブルを結合して、書籍タイトルと最新の貸し出し状況と返却日を変数@booksに代入する
     #@books = Book.left_outer_joins(:loans).select('books.*, loans.returned_date, loans.schedule_date').distinct
     #本のレコードとその本に関する貸出情報をすべて取得
@@ -36,7 +36,7 @@ class LoansController < ApplicationController
 
 
   def new
-    puts "newが呼び出された"
+    puts 'newが呼び出された'
     #params[:id]を受け取り、find_byメソッドで該当する書籍を検索する
     #@book = Book.find(params[:id])
     #新たな貸し出し情報に必要な項目（書籍、ログイン中の会員、返却予定日←これは1週間後のみ）貸出日はupdated_atレコードの更新日が基準
@@ -80,6 +80,7 @@ class LoansController < ApplicationController
    private
    #params[:id]を受け取り、find_byメソッドで該当する書籍を検索する
     def set_book
+      puts 'set_bookが呼び出された'
       @book = Book.find(params[:id])
     end
 
