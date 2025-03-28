@@ -1,8 +1,8 @@
 <h1>Posts#edit</h1>
 
   <p>タイトル: <%= @book.title %></p>
-  <p>返却予定日: <%= @latest_lending.schedule_date %></p>
-  <%= form_with(model: @latest_lending) do |f| %>
+  <p>返却予定日: <%= @lending.schedule_date %></p>
+  <%= form_with(model: @lending, url: lending_path(@lending.id), method: :patch) do |f| %>
     <p>この本を返却しますか？</p>
     <%= f.submit '確定', class: 'btn btn-primary' %>
 <% end %>
