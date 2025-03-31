@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  before_action :set_user, only: %i[ show edit update destroy ]
+  before_action :set_user, only: %i[ edit update destroy ]
 
   # GET /users or /users.json
   def index
@@ -11,6 +11,13 @@ class UsersController < ApplicationController
   def show
     puts "showが呼び出された"
     puts params
+    #ログイン中の会員idに紐づいた貸出情報と書籍情報を取得する。
+    @user = User.includes(lendings: :book).find(params[:id])
+    @lending = @user.lendings.currently_lendings
+    p @user.lendings
+    @user.lendings.each do |lending|
+      p lending.book.title
+    end
   end
 
   # GET /users/new

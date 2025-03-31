@@ -23,7 +23,7 @@ class LendingsController < ApplicationController
     !book.latest_lending.returned_date.nil?
   end
 
-  #引数bookを渡し、その最新の貸出情報から返却予定日を返す。loanがnilの場合はnilを返す。
+  #引数bookを渡し、その最新の貸出情報から返却予定日を返す。lendingがnilの場合はnilを返す。
   def schedule_date_for_lending(book)
     book.latest_lending&.schedule_date
   end
