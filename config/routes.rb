@@ -1,4 +1,8 @@
 Rails.application.routes.draw do
+  devise_for :users, conttollers:{
+    registrations: 'users/registrations',
+    sessions: 'users/sessions'
+  }
   
   resources :users, :lendings
   get "login", to: "sessions#new"

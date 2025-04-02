@@ -15,14 +15,11 @@
       <%= form.label :name, style: "display: block", class: "form-label" %>
       <%= form.text_field :name, class: "form-control" %>
     </div>
+
     <div class="mb-3">
-      <%= form.label :age, style: "display: block", class: "form-label" %>
-      <%= form.text_field :age, class: "form-control" %>
-    </div>
-    <div class="mb-3">
-      <%= form.label :address, style: "display: block", class: "form-label" %>
-      <%= form.text_field :address, class: "form-control" %>
-    </div>    
+    <%= form.label :password_digest, style: "display: block", class: "form-label" %>
+    <%= form.text_field :password_digest, class: "form-control" %>
+    </div>      
     <div>
       <%= form.submit "登録する", class: "btn btn-primary" %>
     </div>

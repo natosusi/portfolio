@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  before_action :set_user, only: %i[ edit update destroy ]
+  #before_action :set_user, only: %i[ edit update destroy ]
 
   # GET /users or /users.json
   def index
@@ -19,7 +19,7 @@ class UsersController < ApplicationController
       p lending.book.title
     end
   end
-
+=begin
   # GET /users/new
   def new
     puts "newが呼び出された"
@@ -86,6 +86,7 @@ class UsersController < ApplicationController
       format.json { head :no_content }
     end
   end
+=end
 =begin
   def login_form
     puts "login_formが呼び出された"
@@ -130,6 +131,6 @@ class UsersController < ApplicationController
     def user_params
       puts "user_paramsが呼び出された"
 
-      params.require(:user).permit(:name, :age, :address)
+      params.require(:user).permit(:name)
     end
 end

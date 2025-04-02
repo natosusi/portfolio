@@ -6,10 +6,11 @@
       <%= form.label :name, style: "display: block", class: "form-label" %>
       <%= form.text_field :name, class: "form-control", value: @name %>
     </div>
+
     <div class="mb-3">
-      <%= form.label :address, style: "display: block", class: "form-label" %>
-      <%= form.text_field :address, class: "form-control", value: @address %>
-    </div> 
+      <%= form.label :password_digest, style: "display: block", class: "form-label" %>
+      <%= form.text_field :password_digest, class: "form-control", value: @password_digest %>
+    </div>
     <div>
       <%= form.submit "ログイン", class: "btn btn-primary" %>
     </div>
