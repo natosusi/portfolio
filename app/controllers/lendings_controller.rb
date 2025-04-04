@@ -1,6 +1,6 @@
 class LendingsController < ApplicationController
   before_action :set_book, only: [:new, :edit]
-  before_action :authorize_user!, only: [:edit]
+  before_action :authorize_edit, only: [:edit]
   helper_method :book_available?, :schedule_date_for_lending, :latest_lending_user
 
   #書籍一覧
@@ -88,14 +88,33 @@ class LendingsController < ApplicationController
       p @book
     end
 
-    #返却操作のアクセス制限条件
-    def authorize_user!
-      #本の最新の貸出情報を取得する
-      puts 'authorize_user!が呼び出された'
-      latest_lending = @book.latest_lending 
-      p @book
-      p latest_lending
+    #返却確認画面のアクセス制限条件
+    def authorize_edit
+      puts 'authorize_edit!が呼び出された'
+      p @book.latest_lending
+      p @book.latest_lending.present?
+      p @book.latest_lending.user_id
+      p @book.latest_lending.returned_date.nil?
 
+      #最新の貸出情報が存在しているかの判定。存在していない場合、アラートを出し書籍一覧に戻る。
+      unless @book.latest_lending.present?
+        puts "判定1"
+        redirect_to lendings_path, alert: 'この本には貸出情報がありません。', status: :see_other and return
+      end
+
+      #貸出情報の会員idと現在ログイン中の会員idが一致しているかの判定。一致していない場合、アラートを出し書籍一覧に戻る。
+      unless @book.latest_lending.user_id == current_user.id
+        puts "判定2"
+        redirect_to lendings_path, alert: 'この本は他の会員に貸出中です。', status: :see_other and return
+      end
+
+      #返却日が登録されているかの判定。登録されている場合、アラートを出し書籍一覧に戻る。
+      unless @book.latest_lending.returned_date.present?
+        puts "判定3"
+        redirect_to '/lendings', alert: 'この本はすでに返却され、現在貸出可能です。', status: :see_other and return
+      end
+    end
+=begin
       #最新の貸出情報が存在しているかの判定
       unless latest_lending
         redirect_to lending_path, alert: 'この本には貸出情報がありません。', status: :unprocessable_entity and return
@@ -110,8 +129,7 @@ class LendingsController < ApplicationController
       if latest_lending.returned_date.present?
         redirect_to lending_path, alert: 'この本はすでに返却され、現在貸出可能です。', status: :unprocessable_entity and return
       end
-    end
-
+=end      
     def lending_params
       params.require(:lending).permit(:user_id, :book_id, :borrowed_date, :schedule_date, :returned_date)
     end

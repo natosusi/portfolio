@@ -1,4 +1,5 @@
 module SessionsHelper
+=begin
   #渡されたユーザーでログインする
   def log_in(user)
     puts "log_inが呼び出された"
@@ -23,4 +24,5 @@ module SessionsHelper
     reset_session
     @current_user = nil
   end
+=end
 end

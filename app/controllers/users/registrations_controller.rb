@@ -2,7 +2,7 @@
 
 class Users::RegistrationsController < Devise::RegistrationsController
   before_action :configure_sign_up_params, if: :devise_controller?
-  before_action :configure_account_update_params, only: [:update]
+  before_action :configure_account_update_params, if: :devise_controller?
 
   # GET /resource/sign_up
   # def new
@@ -52,11 +52,18 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
   # The path used after sign up.
    def after_sign_up_path_for(resource)
+    puts "★after_sign_up_path_forが呼び出された"
     lendings_path
+    p current_user
    end
 
   # The path used after sign up for inactive accounts.
-   def after_inactive_sign_up_path_for(resource)
+   def after_inactive_sign_up_path_for(resource) 
+    "★after_inactive_sign_up_path_forが呼び出された"
     lendings_path
    end
+
+   def after_update_path_for(resource)
+    user_path(@user.id)
+  end
 end

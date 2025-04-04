@@ -4,12 +4,12 @@
   <div class ="mb-3">
     <h3>会員名</h3>
     <p><%= @user.name %></p>
-    <%= link_to "会員情報変更", edit_user_path(@user), class: "btn btn-primary" %>
+    <%= link_to "会員情報変更", edit_user_registration_path, class: "btn btn-primary" %>
   </div>
 
 <div id="lendings">
+  <h3>貸出中の書籍</h3>
   <% if @lending.any? %>
-    <h3>貸出中の書籍</h3>
     <table class = "table">
       <thead>
         <tr>

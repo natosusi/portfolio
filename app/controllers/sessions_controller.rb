@@ -1,6 +1,8 @@
 class SessionsController < ApplicationController
+=begin
   def new
   end
+=end
 =begin
   def create
     puts "createが呼び出された"
