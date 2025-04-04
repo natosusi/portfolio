@@ -16,7 +16,6 @@ class ApplicationController < ActionController::Base
     puts "★ApplicationControllerのafter_sign_in_path_forが呼び出された"
     p current_user
     lendings_path
-    
   end
 
   def after_sign_out_path_for(resource_or_scope)

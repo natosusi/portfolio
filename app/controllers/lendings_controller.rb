@@ -28,7 +28,6 @@ class LendingsController < ApplicationController
     book.latest_lending&.schedule_date
   end
 
-
   #貸出確認画面
   def new
     puts 'newが呼び出された'
@@ -109,7 +108,7 @@ class LendingsController < ApplicationController
       end
 
       #返却日が登録されているかの判定。登録されている場合、アラートを出し書籍一覧に戻る。
-      unless @book.latest_lending.returned_date.present?
+      unless @book.latest_lending.returned_date.nil?
         puts "判定3"
         redirect_to '/lendings', alert: 'この本はすでに返却され、現在貸出可能です。', status: :see_other and return
       end

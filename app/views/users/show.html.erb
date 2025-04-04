@@ -1,14 +1,16 @@
-<h1>会員詳細</h1>
+<h1 class="fw-bold">会員詳細</h1>
 <p style="color: green"><%= notice %></p>
 
   <div class ="mb-3">
-    <h3>会員名</h3>
-    <p><%= @user.name %></p>
+    <div class="d-flex flex-row mb-3 gap-3 align-items-center">
+    <h3 class= "fw-semibold mb-0">会員名：</h3>
+    <p class= "fw-semibold mb-0"><%= @user.name %></p>
     <%= link_to "会員情報変更", edit_user_registration_path, class: "btn btn-primary" %>
+    </div>
   </div>
 
 <div id="lendings">
-  <h3>貸出中の書籍</h3>
+  <h3 class= "fw-semibold">貸出中の書籍</h3>
   <% if @lending.any? %>
     <table class = "table">
       <thead>
@@ -31,8 +33,5 @@
   <% else %>
     <p>現在貸出中の書籍はありません。</p>
   <% end %>
-</div>
-<div class="mb-3">
-  <%= button_to "退会する", @user, method: :delete, class: "btn btn-danger btn-sm" %>
 </div>
 
