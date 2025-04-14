@@ -41,6 +41,12 @@
           <%= link_to "新規登録", new_user_registration_path, class: "nav-link" %>
         </li>
       <% end %>
+      
+      <% if current_user.try(:admin?) %>
+        <li class="nav-item">
+          <%= link_to '管理者ログイン', rails_admin_path %>
+        </li>
+      <% end %>
       </ul>
       <% if user_signed_in? %>
         <span class="navbar-text">
