@@ -32,7 +32,7 @@ class LendingsController < ApplicationController
   def new
     puts 'newが呼び出された'
     #新たな貸し出し情報に必要な項目（書籍、ログイン中の会員、返却予定日←これは1週間後のみ）貸出日はupdated_atレコードの更新日が基準
-    @lending = Lending.new(book: @book, user: current_user, schedule_date: 1.week.from_now.to_date)
+    @lending = Lending.new(book: @book, user: current_user)
   end
 
   #貸出登録

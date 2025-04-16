@@ -3,7 +3,7 @@ ja:
     failure:
       invalid: メールアドレスまたはパスワードが正しくありません。
     sessions:
-      signed_in: ログインに成功しました。
+      signed_in: ログインに成功しました。本を借りよう！
       signed_out: ログアウトしました。
     registrations:
       user:

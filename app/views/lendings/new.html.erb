@@ -2,10 +2,10 @@
 <%= form_with(model: @lending) do |f| %>
   <p>タイトル: <%= @lending.book.title %></p>
   <p>貸出日: <%= Date.current %></p>
-  <p>返却予定日: <%= @lending.schedule_date %></p>
+  <%= f.label "返却予定日", style: "display: block", class: "form-label" %>
+  <%= f.date_field :schedule_date, min: Date.current, class: "form-control" %>
 
   <%= f.hidden_field :book_id %>
-  <%= f.hidden_field :schedule_date %>
 
   <%= f.submit '確定', class: 'btn btn-primary' %>
 <% end %>
