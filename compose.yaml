@@ -10,7 +10,7 @@ services:
         target: /var/lib/mysql
     environment:
       MYSQL_ROOT_PASSWORD: password
-      TZ: "Asia/Tokyo"
+      TZ: 'Asia/Tokyo'
     ports:
       - '3306:3306'
   webapp:
@@ -29,14 +29,16 @@ services:
         source: node_modules
         target: /railsapp/node_modules
     ports:
-      - "3000:3000"
+      - '3000:3000'
     depends_on:
       - db
     stdin_open: true
     tty: true
     environment:
       MYSQL_PASSWORD: password
-      TZ: "Asia/Tokyo"
+      TZ: 'Asia/Tokyo'
+    env_file:
+      - .env
 volumes:
   gemdata:
   node_modules:

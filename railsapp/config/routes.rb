@@ -5,11 +5,15 @@ Rails.application.routes.draw do
     sessions: 'users/sessions'
   }
   
-  resources :users, :lendings, :books
+  resources :users, :lendings
+  resources :books, only: [:create] do
+    collection do
+      get :search
+    end
+  end
   get "login", to: "sessions#new"
   post "login", to: "sessions#create"
   delete "logout", to: "sessions#destroy"
-  get "books/search", to: "books#search"
 
   get "/" => "home#top"
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
