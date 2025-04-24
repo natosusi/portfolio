@@ -1,0 +1,4 @@
+
+<%= turbo_stream.replace "search_result" do %>
+  <%= render partial: "books/search_result", locals: { book_info: @book_info } %>
+<% end %>

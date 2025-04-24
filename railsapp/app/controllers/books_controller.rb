@@ -1,21 +1,21 @@
 class BooksController < ApplicationController
   def search
     puts "searchが呼び出された"
-    isbn = params[:isbn].to_s.strip
+    @isbn = params[:isbn].to_s.strip
 
     #isbnコードの値が正しいか判定する
     #判定1:変数isbnの値が存在しているが、データが空の場合、処理が停止する。
     puts "判定開始"
-    if !isbn.present?
+    if !@isbn.present?
       puts "判定1が実行されてるよ"
       return
       #判定2:変数isbnの値が存在していて、13桁の数字ではない場合、処理が停止する。アラートを表示して変数isbnを空にする。
-    elsif !isbn.match?(/\A\d{13}\z/)
+    elsif !@isbn.match?(/\A\d{13}\z/)
       puts "判定2が実行されてるよ"
-      isbn = ""
-      flash.now[:alert] = "13桁のISBNコードを正しく入力してください。"
-      p isbn
-      return
+      @isbn = ""
+      p @isbn
+      flash.now[:alert] = '13桁のISBNコードを正しく入力してください。'
+      render :search, status: :unprocessable_entity and return
     end
     puts "判定完了"
 
@@ -29,7 +29,7 @@ class BooksController < ApplicationController
       f.response :json, parser_options: { symbolize_names: true }
     end
     #APIリクエストの送信
-    res = conn.get("/books/v1/volumes", {q: "isbn:#{isbn}", country: "JP", key: api_key})
+    res = conn.get("/books/v1/volumes", {q: "isbn:#{@isbn}", country: "JP", key: api_key})
 
     if res.success? && res.body[:items]&.any?
       puts "APIから取得できたよ"
@@ -49,15 +49,10 @@ class BooksController < ApplicationController
       puts "APIから取得できてないよ"
       @book_info = nil
     end
+
     respond_to do |format|
-      format.turbo_stream {
-        render turbo_stream: turbo_stream.replace(
-          "search_result", 
-          partial: "books/search_result",
-          locals: { book_info: @book_info }
-        )
-      }
       format.html { render :search }
+      format.turbo_stream
     end
 
   end

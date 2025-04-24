@@ -1,13 +1,11 @@
 <% if book_info %>
-  <div class ="mb-3">
-    <p class= "fw-semibold mb-0">タイトル： <%= book_info[:title] %></p>
-    <p class= "fw-semibold mb-0">著者名： <%= book_info[:authors] %></p>
-    <p class= "fw-semibold mb-0">説明： <%= book_info[:description] %></p>
-    <% if book_info[:image] %>
-      <img src="<%= book_info[:image] %>" alt="書籍画像">
-    <% end %>
-  </div>
+  <p class= "fw-semibold mb-0">タイトル： <%= book_info[:title] %></p>
+  <p class= "fw-semibold mb-0">著者名： <%= book_info[:authors] %></p>
+  <p class= "fw-semibold mb-0">説明： <%= book_info[:description] %></p>
+  <% if book_info[:image] %>
+    <img src="<%= book_info[:image] %>" alt="書籍画像">
+  <% end %>
 <% end %>
 <% if book_info.nil? %>
-  <p class= "fw-semibold mb-0">取得できませんでした</p>
+<p class= "fw-semibold mb-0">書籍情報を取得できませんでした</p>
 <% end %>
