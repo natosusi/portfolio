@@ -1,10 +1,11 @@
+<div id="flash"></div>
+
 <h1 class="fw-bold">書籍検索・登録</h1>
 
-<%= form_with url: search_books_path, method: :get, data: { turbo_frame: "search_result" } do |f| %>
+<%= form_with url: search_books_path, method: :post, data: { turbo_stream: true } do |f| %>
   <%= f.text_field :isbn, placeholder: "13桁のISBNコードを入力" %>
   <%= f.submit "検索" %>
 <% end %>
 
-<%= turbo_frame_tag "search_result" do %>
-  <%= render partial: "search_result", locals: { book_info: @book_info } %>
-<% end %>
+  <div id="search_result" class ="mb-3">
+  </div>
