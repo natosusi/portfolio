@@ -6,5 +6,15 @@
     <% if book_info[:image] %>
       <img src="<%= book_info[:image] %>" alt="書籍画像">
     <% end %>
+    <%= form_with model: Book.new, url: books_path, method: :post, data: { turbo_stream: true } do |f| %>
+      <%= f.hidden_field :title, value: book_info[:title] %>
+      <%= f.hidden_field :author, value: book_info[:authors] %>
+      <%= f.hidden_field :description, value: book_info[:description] %>
+      <% if book_info[:image] %>
+        <%= f.hidden_field :image_link, value: book_info[:image] %>
+      <% end %>
+      <%= f.submit '書籍登録', class: 'btn btn-primary' %>
+    <% end %>
+
   <% end %>
   </div>

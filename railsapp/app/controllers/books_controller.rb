@@ -63,5 +63,28 @@ class BooksController < ApplicationController
   end
 
   def create 
+    puts "createが呼び出された"
+    @book = Book.new(book_params)
+    puts "情報受け取った"
+    p @book
+ 
+    if @book.save
+      puts "書籍情報を保存したよ"
+      redirect_to search_books_path, notice: '書籍情報を保存しました。'
+    else
+      puts "書籍情報を保存できてないよ"
+      flash.now[:alert] = '書籍情報を保存できませんでした'
+      redirect_to search_books_path
+    end
+    respond_to do |format|
+      format.html { redirect_to search_books_path }
+      format.turbo_stream
+    end
+
+  end
+
+  private
+  def book_params
+    params.require(:book).permit(:title, :author, :description, :image_link)
   end
 end
