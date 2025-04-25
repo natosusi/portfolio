@@ -31,8 +31,11 @@ class BooksController < ApplicationController
     #APIリクエストの送信
     res = conn.get("/books/v1/volumes", {q: "isbn:#{@isbn}", country: "JP", key: api_key})
 
+    p res
+    #APIリクエストが成功、レスポンスボディにitemsがあり、その中に1つ以上要素がある場合
     if res.success? && res.body[:items]&.any?
       puts "APIから取得できたよ"
+      #itemsの先頭のvolumeInfo(書籍情報)をvolumeに格納
       volume = res.body[:items].first[:volumeInfo]
 
       p volume
