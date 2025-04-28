@@ -1,2 +1,11 @@
-<h1>Books#search</h1>
-<p>Find me in app/views/books/search.html.erb</p>
+<div id="flash"></div>
+
+<h1 class="fw-bold">書籍検索・登録</h1>
+
+<%= form_with url: search_books_path, method: :post, data: { turbo_stream: true } do |f| %>
+  <%= f.text_field :isbn, placeholder: "13桁のISBNコードを入力" %>
+  <%= f.submit "検索" %>
+<% end %>
+
+  <div id="search_result" class ="mb-3">
+  </div>

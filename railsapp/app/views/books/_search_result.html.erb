@@ -1,0 +1,10 @@
+<div id="search_result">
+  <% if book_info.present? %>
+    <p class= "fw-semibold mb-0">タイトル： <%= book_info[:title] %></p>
+    <p class= "fw-semibold mb-0">著者名： <%= book_info[:authors] %></p>
+    <p class= "fw-semibold mb-0">説明： <%= book_info[:description] %></p>
+    <% if book_info[:image] %>
+      <img src="<%= book_info[:image] %>" alt="書籍画像">
+    <% end %>
+  <% end %>
+  </div>
