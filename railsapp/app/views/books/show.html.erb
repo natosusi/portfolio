@@ -1,0 +1,19 @@
+<h1 class="fw-bold mb-3">書籍詳細</h1>
+
+<div class="d-flex flex-row" style="gap: 40px;">
+  <div class="p-2"><img src= "<%= @book.image_link %>" style="width: 100%; min-width: 300px; border: 1px solid #eeeeee;" alt="書籍画像"></div>
+  <ul class="list-group p-2">
+    <li class="list-group-item" style="padding: 16px;">
+      <h2 class="mb-1 fs-5 fw-semibold">タイトル</h2>
+      <p class="mb-1"><%= @book.title %></p>
+    </li>
+    <li class="list-group-item" style="padding: 16px;">
+      <h2 class="mb-1 fs-5 fw-semibold">著者名</h2>
+      <p class="mb-1"><%= @book.author %></p>
+    </li>
+    <li class="list-group-item" style="padding: 16px;">
+      <h2 class="mb-1 fs-5 fw-semibold">概要</h2>
+      <p class="mb-1"><%= @book.description %></p>
+    </li>
+  </ul>
+</div>

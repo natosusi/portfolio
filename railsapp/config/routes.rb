@@ -6,9 +6,10 @@ Rails.application.routes.draw do
   }
   
   resources :users, :lendings
-  resources :books, only: [:create]
   get  'books/search', to: 'books#search', as: :search_books
   post 'books/search', to: 'books#search'
+  resources :books, only: [:create,:show]
+
 
   get "login", to: "sessions#new"
   post "login", to: "sessions#create"
