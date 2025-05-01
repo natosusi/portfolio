@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get "likes/create"
+  get "likes/destroy"
   get "reviews/create"
   mount RailsAdmin::Engine => '/admin', as: 'rails_admin'
   devise_for :users, conttollers:{
@@ -9,7 +11,9 @@ Rails.application.routes.draw do
   resources :users, :lendings
   get  'books/search', to: 'books#search', as: :search_books
   post 'books/search', to: 'books#search'
-  resources :books, only: [:create,:show]
+  resources :books, only: [:create,:show] do
+    resources :likes, only: [:create,:destroy]
+  end
   resources :reviews, only: [:create]
 
 
