@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get "reviews/create"
   mount RailsAdmin::Engine => '/admin', as: 'rails_admin'
   devise_for :users, conttollers:{
     registrations: 'users/registrations',
@@ -9,6 +10,7 @@ Rails.application.routes.draw do
   get  'books/search', to: 'books#search', as: :search_books
   post 'books/search', to: 'books#search'
   resources :books, only: [:create,:show]
+  resources :reviews, only: [:create]
 
 
   get "login", to: "sessions#new"
