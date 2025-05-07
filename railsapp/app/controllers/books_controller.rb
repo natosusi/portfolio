@@ -91,6 +91,21 @@ class BooksController < ApplicationController
     p @reviews
     #フォーム生成のため空のreviewオブジェクトを渡す
     @review = Review.new
+
+    #お気に入り登録をしている場合のみ、likesテーブルからログインユーザーと書籍のidに合致するレコードを取得し@likeに格納する
+    #レコードを取得することで、お気に入り解除時にdestroyアクションにレコードのidを渡すことができる
+    puts "お気に入り有無の判定"
+    if Like.liked_by?(@book, current_user)
+      @like = Like.find_by(user_id: current_user.id, book_id: @book.id)
+      p @like.id
+    else
+      puts "お気に入りされてません" and return
+    end
+    puts "お気に入り判定終了"
+
+    #現在お気に入りされている数を数える
+    @likes_count = Like.currently_likes(@book.id).count
+    puts "お気に入りの数は#{@likes_count}"
   end
 
   private

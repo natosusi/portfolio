@@ -2,20 +2,36 @@
 
 <div class="d-flex flex-row mb-5" style="gap: 40px;">
   <div class="p-2"><img src= "<%= @book.image_link %>" style="width: 100%; min-width: 300px; border: 1px solid #eeeeee;" alt="書籍画像"></div>
-  <ul class="list-group p-2">
-    <li class="list-group-item" style="padding: 16px;">
-      <h2 class="mb-1 fs-5 fw-semibold">タイトル</h2>
-      <p class="mb-1"><%= @book.title %></p>
-    </li>
-    <li class="list-group-item" style="padding: 16px;">
-      <h2 class="mb-1 fs-5 fw-semibold">著者名</h2>
-      <p class="mb-1"><%= @book.author %></p>
-    </li>
-    <li class="list-group-item" style="padding: 16px;">
-      <h2 class="mb-1 fs-5 fw-semibold">概要</h2>
-      <p class="mb-1"><%= @book.description %></p>
-    </li>
-  </ul>
+  <div class="mb-5 p-2">
+    <div class="d-grid gap-4 d-md-flex" style="align-items: center;">
+    <% if Like.liked_by?(@book, current_user) %>
+      <%= link_to book_like_path(@book, @like), method: :delete, data: { turbo_method: :delete }, class: 'd-inline-flex align-items-center flex-row btn btn-outline-primary mb-1 gap-2' do %>
+        <i class="bi bi-star-fill"></i>
+        <p style="margin-bottom: 0;">お気に入り解除</p>
+      <% end %>
+    <% else %>
+      <%= link_to book_likes_path(@book), method: :post, data: { turbo_method: :post }, class: 'd-inline-flex align-items-center flex-row btn btn-primary mb-1 gap-2' do %>
+        <i class="bi bi-star-fill"></i>
+        <p style="margin-bottom: 0;">お気に入り登録</p>
+      <% end %>
+    <% end %>
+    <p class="mb-1 fw-normal">お気に入り数：<span class="fw-bold"><%= @likes_count %></span></p>
+    </div>
+    <ul class="list-group">
+      <li class="list-group-item" style="padding: 16px;">
+        <h2 class="mb-1 fs-5 fw-semibold">タイトル</h2>
+        <p class="mb-1"><%= @book.title %></p>
+      </li>
+      <li class="list-group-item" style="padding: 16px;">
+        <h2 class="mb-1 fs-5 fw-semibold">著者名</h2>
+        <p class="mb-1"><%= @book.author %></p>
+      </li>
+      <li class="list-group-item" style="padding: 16px;">
+        <h2 class="mb-1 fs-5 fw-semibold">概要</h2>
+        <p class="mb-1"><%= @book.description %></p>
+      </li>
+    </ul>
+  </div>
 </div>
 
 <div class="mb-3">

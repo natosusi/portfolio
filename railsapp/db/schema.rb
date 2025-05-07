@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_04_30_061415) do
+ActiveRecord::Schema[7.2].define(version: 2025_05_01_075431) do
   create_table "books", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "title", null: false
     t.datetime "created_at", null: false
@@ -29,6 +29,16 @@ ActiveRecord::Schema[7.2].define(version: 2025_04_30_061415) do
     t.date "returned_date"
     t.index ["book_id"], name: "index_lendings_on_book_id"
     t.index ["user_id"], name: "index_lendings_on_user_id"
+  end
+
+  create_table "likes", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.bigint "book_id", null: false
+    t.bigint "user_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["book_id"], name: "index_likes_on_book_id"
+    t.index ["user_id", "book_id"], name: "index_likes_on_user_id_and_book_id", unique: true
+    t.index ["user_id"], name: "index_likes_on_user_id"
   end
 
   create_table "reviews", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
@@ -57,6 +67,8 @@ ActiveRecord::Schema[7.2].define(version: 2025_04_30_061415) do
   end
 
   add_foreign_key "lendings", "users"
+  add_foreign_key "likes", "books"
+  add_foreign_key "likes", "users"
   add_foreign_key "reviews", "books"
   add_foreign_key "reviews", "users"
 end
