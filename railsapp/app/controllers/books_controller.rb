@@ -102,6 +102,10 @@ class BooksController < ApplicationController
       puts "お気に入りされてません" and return
     end
     puts "お気に入り判定終了"
+
+    #現在お気に入りされている数を数える
+    @likes_count = Like.currently_likes(@book.id).count
+    puts "お気に入りの数は#{@likes_count}"
   end
 
   private

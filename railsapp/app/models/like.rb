@@ -6,4 +6,6 @@ class Like < ApplicationRecord
   def self.liked_by?(book, user)
     exists?(book_id: book.id, user_id: user.id)
   end
+  #書籍idでレコードを絞りこむ
+  scope :currently_likes, ->(book_id) {where(book_id: book_id)}
 end
