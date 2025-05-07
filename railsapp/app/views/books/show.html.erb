@@ -5,7 +5,7 @@
   <div class="mb-5 p-2">
     <div class="d-grid gap-2 d-md-block">
     <% if Like.liked_by?(@book, current_user) %>
-      <%= link_to book_likes_path(@book), method: :delete, class: 'd-inline-flex align-items-center flex-row btn btn-outline-primary mb-1 gap-2' do %>
+      <%= link_to book_like_path(@book, @like), method: :delete, data: { turbo_method: :delete }, class: 'd-inline-flex align-items-center flex-row btn btn-outline-primary mb-1 gap-2' do %>
         <i class="bi bi-star-fill"></i>
         <p style="margin-bottom: 0;">お気に入り解除</p>
       <% end %>
