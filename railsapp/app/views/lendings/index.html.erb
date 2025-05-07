@@ -13,7 +13,7 @@
     <% @books.each do |book| %>
       <tbody>
         <tr>
-          <td><%= book.title %></td>
+          <td><%= link_to book.title, book_path(id: book.id) %></td>
           <td><%= book_available?(book) ? '貸し出し可能' : '貸し出し中' %></td>
           <td><%= schedule_date_for_lending(book) %></td>
           <% if book_available?(book) %>

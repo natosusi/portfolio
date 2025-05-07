@@ -83,6 +83,11 @@ class BooksController < ApplicationController
 
   end
 
+  def show
+    #クリックした書籍のidから詳細情報を表示する
+    @book = Book.find(params[:id])
+  end
+
   private
   def book_params
     params.require(:book).permit(:title, :author, :description, :image_link)
