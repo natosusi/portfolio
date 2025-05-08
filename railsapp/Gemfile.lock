@@ -384,6 +384,7 @@ DEPENDENCIES
   faraday
   jbuilder
   jsbundling-rails
+  kaminari
   mysql2 (~> 0.5)
   puma (>= 5.0)
   rails (~> 7.2.2, >= 7.2.2.1)
