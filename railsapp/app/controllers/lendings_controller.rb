@@ -30,9 +30,14 @@ class LendingsController < ApplicationController
 
   #貸出確認画面
   def new
-    puts 'newが呼び出された'
-    #新たな貸し出し情報に必要な項目（書籍、ログイン中の会員、返却予定日←これは1週間後のみ）貸出日はupdated_atレコードの更新日が基準
-    @lending = Lending.new(book: @book, user: current_user)
+    #最新の貸出レコードが存在していないか、最新の貸出レコードのuser_idとログイン中のidが一致している場合、貸出可能(true)
+    if !@book.latest_lending.present? || @book.latest_lending.user_id == current_user.id
+      puts 'newが呼び出された'
+      #新たな貸し出し情報に必要な項目（書籍、ログイン中の会員、返却予定日←これは1週間後のみ）貸出日はupdated_atレコードの更新日が基準
+      @lending = Lending.new(book: @book, user: current_user)
+    else
+      redirect_to lendings_path, alert: 'この本は他の会員に貸出中です。', status: :see_other and return
+    end
   end
 
   #貸出登録
