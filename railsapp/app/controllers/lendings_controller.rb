@@ -7,7 +7,7 @@ class LendingsController < ApplicationController
   def index
     puts 'indexが呼び出された'
     #本のレコードとその本に関する貸出情報をすべて取得
-    @books = Book.includes(:lendings).all
+    @books = Book.includes(:lendings).page(params[:page]).per(9)
   end
 
   #貸出中のユーザーとログインユーザーの一致判定
