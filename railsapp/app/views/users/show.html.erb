@@ -1,6 +1,4 @@
 <h1 class="fw-bold">会員詳細</h1>
-<p style="color: green"><%= notice %></p>
-
   <div class ="mb-3">
     <div class="d-flex flex-row mb-3 gap-3 align-items-center">
     <h3 class= "fw-semibold mb-0">会員名：</h3>
@@ -38,14 +36,20 @@
 <div>
   <h3 class= "fw-semibold mb-4">お気に入り書籍</h3>
   <div class="row row-cols-1 row-cols-md-3 g-4 mb-4">
-    <% @liked_books.each do |book| %>
+    <% @liked_books.zip(@like) do |book,like| %>
       <div class="col">
         <div class="card">
           <div class="row g-0 card-body">
+            <div class="d-grid d-md-flex justify-content-md-end">
+              <%= link_to book_like_path(book, like), method: :delete, data: { turbo_method: :delete }, class: 'd-inline-flex align-items-center flex-row btn btn-outline-info btn-sm gap-2 mb-2' do %>
+                <i class="bi bi-star-fill"></i>
+                <p style="margin-bottom: 0;">お気に入り解除</p>
+              <% end %>
+            </div>
             <div class="col-md-4">
               <img src= "<%= book.image_link %>" alt="書籍画像">
             </div>
-            <div class="col-md-8 p-3">
+            <div class="col-md-8 p-2">
               <div class="mb-1">
                 <h5 class="card-title fw-bold lh-sm"><%= link_to book.title, book_path(id: book.id), class: "link-offset-2 link-underline link-underline-opacity-0" %></h5>
                 <p class="card-text text-body-secondary"><%= book.author %></p>
@@ -53,7 +57,7 @@
               <% if book_available?(book) %>
                 <div class="d-grid d-md-flex justify-content-md-end">
                   <%= link_to "借りる", new_lending_path(id: book.id), class: "btn btn-primary" %>
-                </div>
+                </div> 
               <% elsif latest_lending_user(book) %>
                 <div class="d-flex align-items-center mb-4" style="gap: 10px;">
                   <h6 class="card-title fw-bold" style="margin-bottom: 0;">返却予定日：</h6>
@@ -61,7 +65,7 @@
                 </div>              
                 <div class="d-grid d-md-flex justify-content-md-end">
                   <%= link_to "返却する", edit_lending_path(id: book.id), class: "btn btn-outline-primary" %>
-                </div>
+                </div> 
               <% else %>
                 <div class="d-flex align-items-center mb-4" style="gap: 10px;">
                   <h6 class="card-title fw-bold" style="margin-bottom: 0;">返却予定日：</h6>
@@ -69,8 +73,8 @@
                 </div>
                 <div class="d-grid d-md-flex justify-content-md-end">
                   <button type="button" class= "btn btn-primary disabled">貸出中</button>
-                </div>
-              <% end %>         
+                </div>                
+              <% end %>
             </div>
           </div>
         </div>

@@ -17,9 +17,10 @@ class UsersController < ApplicationController
 
     #モデルで定義したスコープを使用して、ログイン中の会員idでお気に入り登録済の書籍をlikesのレコードから取得する。
     puts "お気に入り書籍を取得"
-    liked = Like.users_likes(current_user)
+    @like = Like.users_likes(current_user)
+    p @like
     #@liked_booksにlikesのレコードから取得した書籍情報の配列を格納する。これによりビューで書籍情報が表示できる。
-    @liked_books = liked.map do |like|
+    @liked_books = @like.map do |like|
       Book.find(like.book_id)
     end
     p @liked_books
