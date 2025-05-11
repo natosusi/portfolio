@@ -29,4 +29,5 @@ Things you may want to cover:
 2. docker compose run webapp bundle install
 3. docker compose build
 4. docker compose run --rm webapp rails assets:precompile
-5. docker compose up
+5. docker compose run webapp rails db:reset
+6. docker compose up
