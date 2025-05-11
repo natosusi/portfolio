@@ -1,31 +1,12 @@
 class LendingsController < ApplicationController
   before_action :set_book, only: [:new, :edit]
   before_action :authorize_edit, only: [:edit]
-  helper_method :book_available?, :schedule_date_for_lending, :latest_lending_user
 
   #書籍一覧
   def index
     puts 'indexが呼び出された'
     #本のレコードとその本に関する貸出情報をすべて取得
     @books = Book.includes(:lendings).page(params[:page]).per(9)
-  end
-
-  #貸出中のユーザーとログインユーザーの一致判定
-  def latest_lending_user(book)
-    return true if book.latest_lending.user_id == current_user.id
-  end
-
-  #貸出状態の判定
-  def book_available?(book)
-    #その本の貸出情報が存在しない場合trueを返す
-    return true unless book.lendings.exists?
-    #最新の返却日がnilではない場合、trueを返しnilの場合falseを返す
-    !book.latest_lending.returned_date.nil?
-  end
-
-  #引数bookを渡し、その最新の貸出情報から返却予定日を返す。lendingがnilの場合はnilを返す。
-  def schedule_date_for_lending(book)
-    book.latest_lending&.schedule_date
   end
 
   #貸出確認画面
@@ -118,22 +99,7 @@ class LendingsController < ApplicationController
         redirect_to '/lendings', alert: 'この本はすでに返却され、現在貸出可能です。', status: :see_other and return
       end
     end
-=begin
-      #最新の貸出情報が存在しているかの判定
-      unless latest_lending
-        redirect_to lending_path, alert: 'この本には貸出情報がありません。', status: :unprocessable_entity and return
-      end
-
-      #最新の貸出情報にある会員idとログイン中の会員idが一致するかの判定
-      unless latest_lending.user_id == current_user.id
-        redirect_to lending_path, alert: 'この本は他の会員に貸出中です。', status: :unprocessable_entity and return
-      end
-
-      #返却済みかどうかの判定
-      if latest_lending.returned_date.present?
-        redirect_to lending_path, alert: 'この本はすでに返却され、現在貸出可能です。', status: :unprocessable_entity and return
-      end
-=end      
+    
     def lending_params
       params.require(:lending).permit(:user_id, :book_id, :borrowed_date, :schedule_date, :returned_date)
     end

@@ -19,9 +19,9 @@ class LikesController < ApplicationController
     puts "user_idは#{@like.user_id}"
     if @like && @like.user_id == current_user.id
       @like.destroy
-      redirect_to book_path(@book.id) , notice: "お気に入り解除しました。"
+      redirect_to(request.referer || book_path(@book.id), notice: "お気に入り解除しました。")
     else
-      redirect_to book_path(@book.id) , alert: "お気に入り解除に失敗しました。"
+      redirect_to(request.referer || book_path(@book.id), alert: "お気に入り解除に失敗しました。")
     end
   end
 end

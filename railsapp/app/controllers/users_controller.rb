@@ -14,6 +14,16 @@ class UsersController < ApplicationController
     #ログイン中の会員idに紐づいた貸出情報と書籍情報を取得する。
     @user = User.includes(lendings: :book).find(params[:id])
     @lending = @user.lendings.currently_lendings
+
+    #モデルで定義したスコープを使用して、ログイン中の会員idでお気に入り登録済の書籍をlikesのレコードから取得する。
+    puts "お気に入り書籍を取得"
+    @like = Like.users_likes(current_user)
+    p @like
+    #@liked_booksにlikesのレコードから取得した書籍情報の配列を格納する。これによりビューで書籍情報が表示できる。
+    @liked_books = @like.map do |like|
+      Book.find(like.book_id)
+    end
+    p @liked_books
   end
 =begin
   # GET /users/new
