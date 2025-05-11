@@ -8,28 +8,33 @@
   </div>
 
 <div id="lendings">
-  <h3 class= "fw-semibold">貸出中の書籍</h3>
+  <h3 class= "fw-semibold">貸出履歴</h3>
   <% if @lending.any? %>
     <table class = "table">
       <thead>
         <tr>
           <th>書籍タイトル</th>
+          <th>貸出日</th>
+          <th>返却日</th>
           <th>返却予定日</th>
-          <th colspan="3"></th>
         </tr>
       </thead>
       <% @lending.each do |lending| %>
         <tbody>
             <tr>
               <td><%= lending.book.title %></td>
-              <td><%= lending.schedule_date %></td>
-              <td><%= link_to "返却する", edit_lending_path(id: lending.book.id), class: "btn btn-outline-primary btn-sm" %></td>
+              <td><%= lending.created_at.strftime('%Y/%m/%d') %></td>
+              <td><%= lending.returned_date %></td>
+              <% if lending.returned_date.nil? %>
+                <td><%= lending.schedule_date.strftime('%Y/%m/%d') %></td>
+                <td><%= link_to "返却する", edit_lending_path(id: lending.book.id), class: "btn btn-outline-primary btn-sm" %></td>
+              <% end %>
             </tr>
         </tbody>
       <% end %>
     </table>
   <% else %>
-    <p>現在貸出中の書籍はありません。</p>
+    <p>貸出履歴はありません。</p>
   <% end %>
 </div>
 
