@@ -40,7 +40,8 @@
     <% if @reviews.present? %>
       <% @reviews.each do |review| %>
           <li class="list-group-item" style="padding: 16px;">
-            <h3 class="mb-1 fs-6 fw-semibold"><%= review.title %></h2>
+            <p class="mb-2 text-secondary">投稿者：<%= review.user.name %></p>
+            <h3 class="mb-1 fs-5 fw-semibold"><%= review.title %></h2>
             <p class="mb-1"><%= review.comment %></p>
           </li>  
       <% end %>
