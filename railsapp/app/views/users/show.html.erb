@@ -10,8 +10,8 @@
 <div class= "mb-5">
   <h3 class= "fw-semibold mb-4">貸出履歴</h3>
   <div class="list-group overflow-y-auto mb-4 list-group-flush rounded border" style="max-height: 500px;">
-    <% if @lending.any? %>
-      <% @lending.each do |lending| %>
+    <% if @lendings.any? %>
+      <% @lendings.each do |lending| %>
         <div class="list-group-item d-flex justify-content-between">
           <div>
             <small><%= lending.created_at.strftime('%Y-%m-%d') %></small>
@@ -24,7 +24,7 @@
                 <small><%= lending.schedule_date.strftime('%Y-%m-%d') %></small>
               </div>
               <div>
-                <%= link_to "返却する", edit_lending_path(id: lending.book.id), class: "btn btn-outline-primary btn-sm align-items-center", style: "height:max-content;" %>
+                <%= link_to "返却する", edit_lending_path(lending.book), class: "btn btn-outline-primary btn-sm align-items-center", style: "height:max-content;" %>
               </div>
             </div>
           <% else %>

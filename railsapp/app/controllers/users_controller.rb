@@ -13,12 +13,7 @@ class UsersController < ApplicationController
     puts params
     #ログイン中の会員idに紐づいた貸出情報と書籍情報を取得する。
     @user = User.find(params[:id])
-    puts "貸出履歴を取得"
-    @lending = Lending.users_lendings(current_user)
-    @lending.each do |lending|
-      p lending.id
-    end
-    #@lending = @user.lendings.currently_lendings
+    @lendings = current_user.lendings.order(id: "DESC")
 
     #モデルで定義したスコープを使用して、ログイン中の会員idでお気に入り登録済の書籍をlikesのレコードから取得する。
     puts "お気に入り書籍を取得"
