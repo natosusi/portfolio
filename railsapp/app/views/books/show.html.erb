@@ -36,21 +36,26 @@
 
 <div class="mb-3">
   <h2 class="fw-semibold mb-3">レビュー</h2>
-  <ul class="list-group p-2 mb-4">
-    <% if @reviews.present? %>
-      <% @reviews.each do |review| %>
-          <li class="list-group-item" style="padding: 16px;">
-            <p class="mb-2 text-secondary">投稿者：<%= review.user.name %></p>
-            <h3 class="mb-1 fs-5 fw-semibold"><%= review.title %></h2>
-            <p class="mb-1"><%= review.comment %></p>
-          </li>  
+  <%= turbo_frame_tag "review-list" do %>
+    <ul class="list-group p-2 mb-4">
+      <% if @reviews.present? %>
+        <% @reviews.each do |review| %>
+            <li class="list-group-item" style="padding: 16px;">
+              <p class="mb-2 text-secondary">投稿者：<%= review.user.name %></p>
+              <h3 class="mb-1 fs-5 fw-semibold"><%= review.title %></h2>
+              <p class="mb-1"><%= review.comment %></p>
+            </li>  
+        <% end %>
+      <% else %>
+        <li class="list-group-item" style="padding: 16px;">
+            <p class="mb-3">レビューは投稿されていません。</p>
+        </li>
       <% end %>
-    <% else %>
-      <li class="list-group-item" style="padding: 16px;">
-          <p class="mb-3">レビューは投稿されていません。</p>
-      </li>
-    <% end %>
-  </ul>
+    </ul>
+    <div class="d-grid d-md-flex justify-content-md-end">
+      <%= paginate @reviews, theme: 'bootstrap-5' %>
+    </div>
+  <% end %>
 
   <h2 class="fw-semibold mb-3">レビューを投稿する</h2>
   <%= form_with model: @review, url: reviews_path, method: :post, data: { turbo: false } do |f| %>

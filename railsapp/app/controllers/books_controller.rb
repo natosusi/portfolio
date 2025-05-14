@@ -87,8 +87,8 @@ class BooksController < ApplicationController
     #クリックした書籍のidから詳細情報を表示する
     @book = Book.find(params[:id])
     #該当書籍のレビューを全件取得する
-    @reviews = @book.reviews
-    p @reviews
+    @reviews = @book.reviews.page(params[:page]).per(5)
+
     #フォーム生成のため空のreviewオブジェクトを渡す
     @review = Review.new
 
