@@ -12,8 +12,8 @@ class UsersController < ApplicationController
     puts "showが呼び出された"
     puts params
     #ログイン中の会員idに紐づいた貸出情報と書籍情報を取得する。
-    @user = User.includes(lendings: :book).find(params[:id])
-    @lending = @user.lendings.currently_lendings
+    @user = User.find(params[:id])
+    @lendings = current_user.lendings.order(id: "DESC")
 
     #モデルで定義したスコープを使用して、ログイン中の会員idでお気に入り登録済の書籍をlikesのレコードから取得する。
     puts "お気に入り書籍を取得"
