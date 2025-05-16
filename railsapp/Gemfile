@@ -72,3 +72,7 @@ gem 'faraday'
 
 gem 'kaminari'
 gem 'bootstrap5-kaminari-views', '~> 0.0.1'
+
+group :development do
+  gem 'letter_opener_web'
+end

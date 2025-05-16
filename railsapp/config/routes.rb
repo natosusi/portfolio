@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  mount LetterOpenerWeb::Engine, at: '/letter_opener' if Rails.env.development?
+  
   get "likes/create"
   get "likes/destroy"
   get "reviews/create"
