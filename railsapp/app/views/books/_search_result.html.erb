@@ -1,20 +1,38 @@
-<div id="search_result">
+<div id="search_result" class="mb-5">
   <% if book_info.present? %>
-    <p class= "fw-semibold mb-0">タイトル： <%= book_info[:title] %></p>
-    <p class= "fw-semibold mb-0">著者名： <%= book_info[:authors] %></p>
-    <p class= "fw-semibold mb-0">説明： <%= book_info[:description] %></p>
-    <% if book_info[:image] %>
-      <img src="<%= book_info[:image] %>" alt="書籍画像">
-    <% end %>
-    <%= form_with model: Book.new, url: books_path, method: :post, data: { turbo_stream: true } do |f| %>
-      <%= f.hidden_field :title, value: book_info[:title] %>
-      <%= f.hidden_field :author, value: book_info[:authors] %>
-      <%= f.hidden_field :description, value: book_info[:description] %>
+    <div class="d-flex flex-row mb-2">
       <% if book_info[:image] %>
-        <%= f.hidden_field :image_link, value: book_info[:image] %>
+        <div class="p-2">
+          <img src="<%= book_info[:image] %>" alt="書籍画像" style="width: 100%; min-width: 300px; border: 1px solid #eeeeee;">
+        </div>
       <% end %>
-      <%= f.submit '書籍登録', class: 'btn btn-primary' %>
-    <% end %>
-
+      <div class="p-2">
+        <ul class="list-group mb-3">
+          <li class="list-group-item" style="padding: 16px;">
+            <h5 class= "fw-semibold mb-1">タイトル</h5>
+            <p class= "mb-1"><%= book_info[:title] %></p>
+          </li>
+          <li class="list-group-item" style="padding: 16px;">
+            <h5 class= "fw-semibold mb-1">著者名</h5>
+            <p class= "mb-1"><%= book_info[:authors] %></p>
+          </li>
+          <li class="list-group-item" style="padding: 16px;">
+            <h5 class= "fw-semibold mb-1">概要</h5>
+            <p class= "mb-1"><%= book_info[:description] %></p>
+          </li>
+        </ul>
+        <%= form_with model: Book.new, url: books_path, method: :post, data: { turbo_stream: true } do |f| %>
+          <%= f.hidden_field :title, value: book_info[:title] %>
+          <%= f.hidden_field :author, value: book_info[:authors] %>
+          <%= f.hidden_field :description, value: book_info[:description] %>
+          <% if book_info[:image] %>
+            <%= f.hidden_field :image_link, value: book_info[:image] %>
+          <% end %>
+          <div class="d-grid d-md-flex justify-content-md-end">
+            <%= f.submit '書籍登録', class: 'btn btn-primary btn-lg', data: { turbo_stream: true } %>
+          </div>
+        <% end %>
+      </div>
+    </div>
   <% end %>
-  </div>
+</div>
