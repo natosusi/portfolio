@@ -4,7 +4,6 @@ class Users::Mailer < Devise::Mailer
   default template_path: 'devise/mailer'
 
   def confirmation_instructions(record, token, opts={})
-    puts "comfirmation_instructionsが呼び出された"
     if record.unconfirmed_email != nil
       opts[:subject] = "メールアドレス変更手続きを完了してください。"
     else
