@@ -1,5 +1,15 @@
-<p>Welcome <%= @email %>!</p>
+<p class="fw-5"><%= @resource.name %>さん</p>
 
-<p>You can confirm your account email through the link below:</p>
+<p>hogehogeappをご利用いただきありがとうございます。</p>
 
-<p><%= link_to 'Confirm my account', confirmation_url(@resource, confirmation_token: @token) %></p>
+<% if @resource.try(:unconfirmed_email?) %>
+  <p>こちらのリンクからメールアドレス変更を完了させてください。</p>
+  <p><%= link_to 'メールアドレス変更を完了する', confirmation_url(@resource, confirmation_token: @token) %></p>
+  <p>このURLの有効期限は1時間です。</p>
+<% else %>
+  <p>こちらのリンクから登録を完了させてください。</p>
+  <p><%= link_to '登録を完了する', confirmation_url(@resource, confirmation_token: @token) %></p>
+  <p>このURLの有効期限は1時間です。</p>
+<% end %>
+
+<p>※このメールは返信しても届きません。お問い合わせはアプリを起動して「お問い合わせ」からお願いいたします。</p>
