@@ -8,7 +8,4 @@ class Like < ApplicationRecord
   end
   #書籍idでレコードを絞りこむ
   scope :currently_likes, ->(book_id) {where(book_id: book_id)}
-
-  #会員idでレコードを絞り込む
-  scope :users_likes, ->(user_id) {where(user_id: user_id)}
 end
