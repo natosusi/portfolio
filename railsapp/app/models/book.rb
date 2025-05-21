@@ -1,6 +1,7 @@
 class Book < ApplicationRecord
   has_many :lendings
   has_many :reviews
+  has_many :likes
 
   def latest_lending
     #その本に関連するすべてのloanレコードを取得

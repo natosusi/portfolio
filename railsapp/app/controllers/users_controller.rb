@@ -5,9 +5,7 @@ class UsersController < ApplicationController
   end
 
   def show
-
-    #ログイン中の会員idに紐づいた貸出情報と書籍情報を取得する。
-    @user = User.find(params[:id])
+    #ログイン中の会員に紐づいた貸出履歴を取得
     @lendings = current_user.lendings.order(id: "DESC").page(params[:page]).per(5)
 
     #ログイン中の会員がお気に入り登録済の書籍をlikesのレコードから取得する。
@@ -19,14 +17,4 @@ class UsersController < ApplicationController
     end
   end
 
-  private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_user
-      @user = User.find(params[:id])
-    end
-
-    # Only allow a list of trusted parameters through.
-    def user_params
-      params.require(:user).permit(:name)
-    end
 end
