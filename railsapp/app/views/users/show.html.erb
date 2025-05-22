@@ -1,92 +1,59 @@
+<div id="flash">
+</div>
+
 <h1 class="fw-bold">会員詳細</h1>
 <div class ="mb-5">
   <div class="d-flex flex-row mb-3 gap-3 align-items-center">
     <h3 class= "fw-semibold mb-0">会員名：</h3>
-    <p class= "fw-semibold mb-0"><%= @user.name %></p>
+    <p class= "fw-semibold mb-0"><%= current_user.name %></p>
     <%= link_to "会員情報変更", edit_user_registration_path, class: "btn btn-primary" %>
   </div>
 </div>
 
 <div class= "mb-5">
   <h3 class= "fw-semibold mb-4">貸出履歴</h3>
-  <div class="list-group overflow-y-auto mb-4 list-group-flush rounded border" style="max-height: 500px;">
-    <% if @lendings.any? %>
-      <% @lendings.each do |lending| %>
-        <div class="list-group-item d-flex justify-content-between">
-          <div>
-            <small><%= lending.created_at.strftime('%Y-%m-%d') %></small>
-            <h6 class="mb-3 fw-bold"><%= link_to lending.book.title, book_path(id: lending.book.id), class: "link-offset-2 link-underline link-underline-opacity-0" %></h6>
+  <%= turbo_frame_tag "lending-log" do %>
+    <div class="list-group overflow-y-auto mb-4 list-group-flush rounded border" style="max-height: 500px;">
+      <% if @lendings.any? %>
+        <% @lendings.each do |lending| %>
+          <div class="list-group-item d-flex justify-content-between">
+            <div>
+              <small><%= lending.created_at.strftime('%Y-%m-%d') %></small>
+              <h6 class="mb-3 fw-bold"><%= link_to lending.book.title, book_path(id: lending.book.id), data: { turbo: :false }, class: "link-offset-2 link-underline link-underline-opacity-0" %></h6>
+            </div>
+            <% if lending.returned_date.nil? %>
+              <div class="d-block align-items-center">
+                <div class="mb-2">
+                  <p class="fw-bold mb-1">返却予定日</p>
+                  <small><%= lending.schedule_date.strftime('%Y-%m-%d') %></small>
+                </div>
+                <div>
+                  <%= link_to "返却する", edit_lending_path(lending.book), data: { turbo: :false }, class: "btn btn-outline-primary btn-sm align-items-center", style: "height:max-content;" %>
+                </div>
+              </div>
+            <% else %>
+              <div class="align-items-center">
+                <p class="fw-bold mb-1">返却日</p>
+                <small><%= lending.returned_date %></small>
+              </div>
+            <% end %>
           </div>
-          <% if lending.returned_date.nil? %>
-            <div class="d-block align-items-center">
-              <div class="mb-2">
-                <p class="fw-bold mb-1">返却予定日</p>
-                <small><%= lending.schedule_date.strftime('%Y-%m-%d') %></small>
-              </div>
-              <div>
-                <%= link_to "返却する", edit_lending_path(lending.book), class: "btn btn-outline-primary btn-sm align-items-center", style: "height:max-content;" %>
-              </div>
-            </div>
-          <% else %>
-            <div class="align-items-center">
-              <p class="fw-bold mb-1">返却日</p>
-              <small><%= lending.returned_date %></small>
-            </div>
-          <% end %>
-        </div>
+        <% end %>
+      <% else %>
+        <p class="fs-5 fw-bold">貸出履歴がありません。</p>
       <% end %>
-    <% else %>
-      <p class="fs-5 fw-bold">貸出履歴がありません。</p>
-    <% end %>
-  </div>
+    </div>
+    <div class="d-grid d-md-flex justify-content-md-end">
+      <%= paginate @lendings, theme: 'bootstrap-5' %>
+    </div>
+  <% end %>
 </div>
 
 <div class= "mb-5">
   <h3 class= "fw-semibold mb-4">お気に入り書籍</h3>
-  <div class="row row-cols-1 row-cols-md-3 g-4 mb-4">
-    <% @liked_books.zip(@like) do |book,like| %>
-      <div class="col">
-        <div class="card">
-          <div class="row g-0 card-body">
-            <div class="d-grid d-md-flex justify-content-md-end">
-              <%= link_to book_like_path(book, like), method: :delete, data: { turbo_method: :delete }, class: 'd-inline-flex align-items-center flex-row btn btn-outline-info btn-sm gap-2 mb-2' do %>
-                <i class="bi bi-star-fill"></i>
-                <p style="margin-bottom: 0;">お気に入り解除</p>
-              <% end %>
-            </div>
-            <div class="col-md-4">
-              <img src= "<%= book.image_link %>" alt="書籍画像">
-            </div>
-            <div class="col-md-8 p-2">
-              <div class="mb-1">
-                <h5 class="card-title fw-bold lh-sm"><%= link_to book.title, book_path(id: book.id), class: "link-offset-2 link-underline link-underline-opacity-0" %></h5>
-                <p class="card-text text-body-secondary"><%= book.author %></p>
-              </div>
-              <% if book_available?(book) %>
-                <div class="d-grid d-md-flex justify-content-md-end">
-                  <%= link_to "借りる", new_lending_path(id: book.id), class: "btn btn-primary" %>
-                </div> 
-              <% elsif latest_lending_user(book) %>
-                <div class="d-flex align-items-center mb-4" style="gap: 10px;">
-                  <h6 class="card-title fw-bold" style="margin-bottom: 0;">返却予定日：</h6>
-                  <p class="card-text fs-6 text-body-secondary"><%= schedule_date_for_lending(book) %></p>
-                </div>              
-                <div class="d-grid d-md-flex justify-content-md-end">
-                  <%= link_to "返却する", edit_lending_path(id: book.id), class: "btn btn-outline-primary" %>
-                </div> 
-              <% else %>
-                <div class="d-flex align-items-center mb-4" style="gap: 10px;">
-                  <h6 class="card-title fw-bold" style="margin-bottom: 0;">返却予定日：</h6>
-                  <p class="card-text fs-6 text-body-secondary"><%= schedule_date_for_lending(book) %></p>
-                </div>
-                <div class="d-grid d-md-flex justify-content-md-end">
-                  <button type="button" class= "btn btn-primary disabled">貸出中</button>
-                </div>                
-              <% end %>
-            </div>
-          </div>
-        </div>
-      </div>
-    <% end %>
-  </div>
+  <%= turbo_frame_tag "liked_books" do %>
+    <div id="liked">
+      <%= render partial: "liked" %>
+    </div>
+  <% end %>
 </div>
