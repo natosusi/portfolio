@@ -2,17 +2,11 @@ class LendingsController < ApplicationController
   before_action :set_book, only: [:new, :edit]
   before_action :authorize_confirmed, only: [:edit]
 
-  #書籍一覧
-  def index
-    #本のレコードとその本に関する貸出情報をすべて取得
-    @books = Book.includes(:lendings).page(params[:page]).per(9)
-  end
-
   #貸出確認画面
   def new
     #貸出情報が1つ以上存在していて、最新の貸出情報の返却日が登録されていない場合
     if @book.lendings.present? && @book.latest_lending.returned_date.blank?
-      redirect_to lendings_path, alert: 'この本は貸出中です。', status: :see_other and return
+      redirect_to books_path, alert: 'この本は貸出中です。', status: :see_other and return
     end
     #新たな貸し出し情報に必要な項目（書籍、ログイン中の会員）貸出日はupdated_atレコードの更新日が基準
     @lending = current_user.lendings.new(book: @book)
@@ -25,7 +19,7 @@ class LendingsController < ApplicationController
     @lending = current_user.lendings.build(lending_params)
 
     if @lending.save
-      redirect_to lendings_path, notice: '貸出が完了しました。'
+      redirect_to books_path, notice: '貸出が完了しました。'
     else
       flash.now[:alert] = '返却予定日を指定してください。'
       render :new, status: :unprocessable_entity
@@ -47,7 +41,7 @@ class LendingsController < ApplicationController
 
     #返却日を現在の日付で登録する
     if @lending.update(returned_date: Date.current)
-      redirect_to lendings_path, notice: '返却が完了しました。'
+      redirect_to books_path, notice: '返却が完了しました。'
     else
       flash.now[:alert] = '返却に失敗しました。'
       redirect_to :edit
@@ -68,12 +62,12 @@ class LendingsController < ApplicationController
 
       #貸出情報が1件もない、または既に最新の貸出情報の返却日が登録されている場合、アラートを出し書籍一覧に戻る。
       if @book.lendings.blank? || @book.latest_lending.returned_date.present?
-        redirect_to lendings_path, alert: 'この本は貸出中でないため、返却登録できません。', status: :see_other and return
+        redirect_to books_path, alert: 'この本は貸出中でないため、返却登録できません。', status: :see_other and return
       end
 
       #最新の貸出情報の会員idと現在ログイン中の会員idが一致していない場合、アラートを出し書籍一覧に戻る。
       if @book.latest_lending.user != current_user
-        redirect_to lendings_path, alert: 'この本は他の会員に貸出中のため、返却登録できません。', status: :see_other and return
+        redirect_to books_path, alert: 'この本は他の会員に貸出中のため、返却登録できません。', status: :see_other and return
       end
 
     end

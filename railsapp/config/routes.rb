@@ -1,9 +1,6 @@
 Rails.application.routes.draw do
   mount LetterOpenerWeb::Engine, at: '/letter_opener' if Rails.env.development?
-  
-  get "likes/create"
-  get "likes/destroy"
-  get "reviews/create"
+
   mount RailsAdmin::Engine => '/admin', as: 'rails_admin'
   devise_for :users, conttollers:{
     registrations: 'users/registrations',
@@ -13,15 +10,10 @@ Rails.application.routes.draw do
   resources :users, :lendings
   get  'books/search', to: 'books#search', as: :search_books
   post 'books/search', to: 'books#search'
-  resources :books, only: [:create,:show] do
+  resources :books, only: [:index, :create,:show] do
     resources :likes, only: [:create,:destroy]
   end
   resources :reviews, only: [:create]
-
-
-  get "login", to: "sessions#new"
-  post "login", to: "sessions#create"
-  delete "logout", to: "sessions#destroy"
 
   get "/" => "home#top"
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
