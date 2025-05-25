@@ -1,4 +1,10 @@
 class BooksController < ApplicationController
+  #書籍一覧
+  def index
+    #本のレコードとその本に関する貸出情報をすべて取得
+    @books = Book.includes(:lendings).page(params[:page]).per(9)
+  end
+  
   def search
     @isbn = params[:isbn].to_s.strip
 
