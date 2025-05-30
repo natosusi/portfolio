@@ -4,19 +4,23 @@ class LendingsController < ApplicationController
 
   #貸出確認画面
   def new
-    #貸出情報が1つ以上存在していて、最新の貸出情報の返却日が登録されていない場合
-    if @book.lendings.present? && @book.latest_lending.returned_date.blank?
+    if check_lending_status(@book)
       redirect_to books_path, alert: 'この本は貸出中です。', status: :see_other and return
     end
     #新たな貸し出し情報に必要な項目（書籍、ログイン中の会員）貸出日はupdated_atレコードの更新日が基準
     @lending = current_user.lendings.new(book: @book)
   end
 
+  def check_lending_status(book)
+    book.lendings.present? && book.latest_lending.returned_date.blank?
+  end
+
   #貸出登録
   def create 
     #現在のユーザーに紐づいた貸出情報を作成する
     #current_user.lendingsで現在ログイン中の会員と新しく作成される貸出情報が紐づけられる。（user_idが自動的に設定される）
-    @lending = current_user.lendings.build(lending_params)
+    #@lending = current_user.lendings.build(lending_params)
+    @lending = create_lending_infomation(current_user, lending_params)
 
     if @lending.save
       redirect_to books_path, notice: '貸出が完了しました。'
@@ -24,6 +28,10 @@ class LendingsController < ApplicationController
       flash.now[:alert] = '返却予定日を指定してください。'
       render :new, status: :unprocessable_entity
     end
+  end
+
+  def create_lending_infomation(user,params)
+    @lending = user.lendings.build(params)
   end
 
   def show
