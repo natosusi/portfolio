@@ -4,9 +4,12 @@ RSpec.describe Lending, type: :model do
   let(:lending) { create(:lending) }
 
   describe "バリデーションのテスト" do
+    it "有効なデータであれば保存される" do
+      expect(build(:lending)).to be_valid
+    end
 
     context "schedule_dateのバリデーション" do
-      it "schedule_dateが空の場合バリデーションする" do
+      it "schedule_dateが空の場合保存できない" do
         lending.schedule_date = ""
         expect(lending).to_not be_valid
       end
@@ -29,6 +32,6 @@ RSpec.describe Lending, type: :model do
       let(:target) { :user }
       it { expect(association.macro).to eq :belongs_to }
     end
-    
+
   end
 end

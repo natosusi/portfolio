@@ -1,39 +1,34 @@
 require 'rails_helper'
 
 RSpec.describe User, type: :model do
-  #モデルのテストデータを準備
-  let(:user) {build(:user)}
+  let(:user) { build(:user) }
 
   describe "バリデーションのテスト" do
-    #テスト対象
-    context "name、email、passwordのバリデーション" do
-      #期待値
-      it "name、email、passwordのバリデーションが通ること" do
-        expect(user).to be_valid
-      end
+    it "有効なデータであれば保存される" do
+      expect(user).to be_valid
     end
 
     context "nameのバリデーション" do
-      it "nameが空の場合はバリデーションする。" do
+      it "nameが空の場合は保存できない" do
         user.name = ""
         expect(user).to_not be_valid
       end
     end
 
     context "emailのバリデーション" do
-      it "emailが空の場合はバリデーションする。" do
+      it "emailが空の場合は保存できない" do
         user.email = ""
         expect(user).to_not be_valid
       end
     end
 
     context "passwordのバリデーション" do
-      it "passwordが空の場合はバリデーションする。" do
+      it "passwordが空の場合は保存できない" do
         user.password = ""
         expect(user).to_not be_valid
       end
       
-      it "passwordが6文字以下の場合はバリデーションする。" do
+      it "passwordが6文字以下の場合は保存できない" do
         user.password = "hoge"
         expect(user).to_not be_valid
       end

@@ -4,6 +4,9 @@ RSpec.describe Like, type: :model do
   let(:like) { create(:like) }
 
   describe "バリデーションのテスト" do
+    it "有効なデータであれば保存される" do
+      expect(build(:like)).to be_valid
+    end
 
     context "user_idのバリデーション" do
       before do
