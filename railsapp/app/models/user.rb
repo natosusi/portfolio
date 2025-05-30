@@ -8,5 +8,4 @@ class User < ApplicationRecord
   has_many :likes, dependent: :destroy
   has_many :like_books, through: :likes, source: :book
   validates :name,{presence: true}
-  #validates :address,{presence: true, uniqueness: true}
 end
