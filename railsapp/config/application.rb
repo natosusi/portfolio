@@ -26,12 +26,12 @@ module Railsapp
     # config.time_zone = "Central Time (US & Canada)"
     # config.eager_load_paths << Rails.root.join("extras")
     config.generators do |g|
-      g.test_framework :rspec, # テストフレームワークとしてRSpecを指定
-      request_specs: false, # リクエストスペックを作成しない
-      fixtures: false, # テストデータを作るfixtureを作成しない
-      view_specs: false, # ビュー用のスペックを作成しない
-      helper_specs: false, # ヘルパー用のスペックを作成しない
-      routing_specs: false # ルーティングのスペックを作成しない
+      g.test_framework :rspec,
+        request_specs: false,
+        fixtures: false,
+        view_specs: false,
+        helper_specs: false,
+        routing_specs: false
       end
   end
 end
