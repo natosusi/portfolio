@@ -14,6 +14,7 @@ Rails.application.routes.draw do
     resources :likes, only: [:create,:destroy]
   end
   resources :reviews, only: [:create]
+  resources :notifications, only: [:index]
 
   get "/" => "home#top"
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
