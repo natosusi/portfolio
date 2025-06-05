@@ -52,18 +52,15 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
   # The path used after sign up.
    def after_sign_up_path_for(resource)
-    puts "★after_sign_up_path_forが呼び出された"
-    lendings_path
-    p current_user
+    books_path
    end
 
   # The path used after sign up for inactive accounts.
    def after_inactive_sign_up_path_for(resource) 
-    "★after_inactive_sign_up_path_forが呼び出された"
-    lendings_path
+    books_path
    end
 
    def after_update_path_for(resource)
-    user_path(@user.id)
+    user_path(current_user)
   end
 end
