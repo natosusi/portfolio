@@ -9,9 +9,16 @@ class Users::SessionsController < Devise::SessionsController
   # end
 
   # POST /resource/sign_in
-  # def create
-  #   super
-  # end
+  def create
+    super
+    @due_lendings = Lending.due_date(current_user)
+    return if @due_lendings.blank?
+
+    @due_lendings.each do |lending|
+      notification = current_user.notifications.build(lending: lending, action_type: 1)
+      next if !notification.save
+    end
+  end
 
   # DELETE /resource/sign_out
   # def destroy
