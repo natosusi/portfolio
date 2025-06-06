@@ -5,17 +5,17 @@
       <% if @notifications.any? %>
         <% @notifications.each do |notification| %>
           <div class="list-group-item d-flex justify-content-between align-items-center">
-            <div>
+            <div class="p-2 g-col-6">
               <small><%= notification.created_at.strftime('%Y-%m-%d') %></small>
               <% if action_due_date?(notification) %>
                 <h6 class="mb-3 fw-bold">「<%= link_to notification.lending.book.title, book_path(notification.lending.book), data: { turbo: :false }, class: "link-offset-2 link-underline link-underline-opacity-0" %>」の返却期限当日です。本日中に書籍の返却をしてください。</h6>
               <% end %>
             </div>
-            <div>
-              <% if lending_not_returned(notification) %>
+            <% if lending_not_returned(notification) %>
+              <div class="d-flex justify-content-center" style="min-width: 80px">
                 <%= link_to "返却する", edit_lending_path(notification.lending.book), data: { turbo: :false }, class: "btn btn-outline-primary btn-sm align-items-center", style: "height:max-content;" %>
-              <% end %>
-            </div>
+              </div>
+            <% end %>
           </div>
         <% end %>
       <% else %>
