@@ -4,7 +4,6 @@ create_table "notifications", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci
   t.bigint "user_id", null: false
   t.bigint "lending_id", null: false
   t.integer "action_type"
-  t.boolean "checked", default: false, null: false
   t.timestamps
   t.index ["user_id"], name: "index_reviews_on_user_id"
   t.index ["lending_id"], name: "index_reviews_on_lending_id"
