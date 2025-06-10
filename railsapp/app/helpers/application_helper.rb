@@ -16,9 +16,4 @@ module ApplicationHelper
   def schedule_date_for_lending(book)
     book.latest_lending&.schedule_date
   end
-
-  def uncheck_notification
-    current_user.notifications.unchecked
-  end
-
 end
