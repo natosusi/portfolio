@@ -59,14 +59,43 @@
             </span>
           </li>
           <li class="nav-item">
-            <%= link_to notification_index_path, class: "btn btn-light btn-sm position-relative", data: { turbo_prefetch: false } do %>
-              <i class="bi bi-bell-fill"></i>
-              <% if uncheck_notification.any? %>
-                <span class="position-absolute top-0 start-100 translate-middle bg-danger border border-light rounded-circle" style= "padding: 0.4rem">
-                <span class="visually-hidden">New alerts</span>
-                </span>
-              <% end %> 
-            <% end %> 
+            <div class="dropdown" data-bs-theme="light">
+              <button type="button" class="btn btn-light btn-sm position-relative dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" data-bs-auto-close="outside">
+                <i class="bi bi-bell-fill"></i>
+                <% if @notifications.any? %>
+                  <span class="position-absolute top-0 start-100 translate-middle bg-danger border border-light rounded-circle" style= "padding: 0.4rem">
+                    <span class="visually-hidden">New alerts</span>
+                  </span>
+                <% end %> 
+              </button>
+              <div class="dropdown-menu p-1 dropdown-menu-end" style="width: 400px;">
+                <div id="notification_list">
+                  <ul class="list-group list-group-flush">
+                    <li class="list-group-item">
+                      <div class="d-grid d-md-flex align-items-center gap-2">
+                        <p class="dropdown-header fw-bold p-0">通知</p>
+                      </div>
+                    </li>
+                    <% if @notifications.any? %>
+                      <% @notifications.each do |notification| %>
+                        <li class="list-group-item">
+                          <div class="d-grid d-md-flex align-items-center justify-content-between gap-2">
+                            <p style="font-size:12px; margin-bottom: 0;">「<span class="fw-bold"><%= notification.lending.book.title %></span>」の返却期限は<span class="fw-bold text-danger"><%= notification.lending.schedule_date.strftime('%Y/%m/%d') %></span>です。期日までに返却登録をしてください。</p>
+                            <div class="d-grid d-md-flex justify-content-md-end gap-2">
+                              <%= link_to "返却", edit_lending_path(notification.lending.book), data: { turbo: :false }, class: "btn btn-primary btn-sm align-items-center", style: "width: max-content; height: max-content;" %>
+                            </div>
+                          </div>
+                        </li>
+                      <% end %>
+                    <% else %>
+                      <li class="list-group-item">
+                        <p style="font-size:12px; margin-bottom: 0;">通知はありません。</p>
+                      </li>
+                    <% end %>
+                  </ul>
+                </div>
+              </div>
+            </div>
           </li>
         </ul>
       <% end %>

@@ -3,5 +3,9 @@ class ApplicationController < ActionController::Base
   #include SessionsHelper
   allow_browser versions: :modern
   before_action :authenticate_user!
+  before_action :get_notifications
 
+  def get_notifications
+    @notifications = current_user&.notifications&.not_returned
+  end
 end
