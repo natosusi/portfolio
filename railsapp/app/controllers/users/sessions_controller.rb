@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class Users::SessionsController < Devise::SessionsController
+  include NotificationCreator
   #before_action :configure_sign_in_params, if: :devise_controller?
 
   # GET /resource/sign_in
@@ -11,13 +12,7 @@ class Users::SessionsController < Devise::SessionsController
   # POST /resource/sign_in
   def create
     super
-    @due_lendings = Lending.due_date(current_user)
-    return if @due_lendings.blank?
-
-    @due_lendings.each do |lending|
-      notification = current_user.notifications.build(lending: lending, action_type: 1)
-      next if !notification.save
-    end
+    create_notification
   end
 
   # DELETE /resource/sign_out
