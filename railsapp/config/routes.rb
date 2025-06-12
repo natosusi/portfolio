@@ -2,11 +2,16 @@ Rails.application.routes.draw do
   mount LetterOpenerWeb::Engine, at: '/letter_opener' if Rails.env.development?
 
   mount RailsAdmin::Engine => '/admin', as: 'rails_admin'
-  devise_for :users, conttollers:{
-    registrations: 'users/registrations',
-    sessions: 'users/sessions'
+
+  devise_for :users, controllers: {
+    registrations: "users/registrations",
+    sessions: "users/sessions"
   }
-  
+  devise_scope :user do
+    get 'users/sign_in', to: 'users/sessions#new'
+    get 'users/sign_out', to: 'users/sessions#destroy'
+  end  
+
   resources :users, :lendings
   get  'books/search', to: 'books#search', as: :search_books
   post 'books/search', to: 'books#search'

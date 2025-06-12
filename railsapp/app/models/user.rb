@@ -7,5 +7,6 @@ class User < ApplicationRecord
   has_many :reviews
   has_many :likes, dependent: :destroy
   has_many :like_books, through: :likes, source: :book
+  has_many :notifications, dependent: :destroy
   validates :name,{presence: true}
 end
