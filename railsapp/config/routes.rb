@@ -1,7 +1,15 @@
+require 'sidekiq/web'
+require 'sidekiq-scheduler/web'
+
 Rails.application.routes.draw do
   mount LetterOpenerWeb::Engine, at: '/letter_opener' if Rails.env.development?
 
   mount RailsAdmin::Engine => '/admin', as: 'rails_admin'
+
+  Sidekiq::Web.use(Rack::Auth::Basic) do |user_id, password|
+    [user_id, password] == [ENV['SIDEKIQ_BASIC_ID'], ENV['SIDEKIQ_BASIC_PASSWORD']]
+  end
+  mount Sidekiq::Web, at: '/sidekiq'
 
   devise_for :users, controllers: {
     registrations: "users/registrations",
