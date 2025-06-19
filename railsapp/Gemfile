@@ -85,3 +85,6 @@ end
 
 gem "ridgepole"
 gem 'simplecov', require: false, group: :test
+
+gem 'sidekiq'
+gem 'sidekiq-scheduler'

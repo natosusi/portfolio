@@ -32,6 +32,8 @@ module Railsapp
         view_specs: false,
         helper_specs: false,
         routing_specs: false
-      end
+    end
+
+    config.active_job.queue_adapter = :sidekiq
   end
 end
