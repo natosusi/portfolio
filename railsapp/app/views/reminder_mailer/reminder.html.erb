@@ -1,0 +1,12 @@
+<% @lendings.each do |lending| %>
+  <h4><%= lending.user.name %>様</h4>
+  <p>いつもご利用いただきありがとうございます。<br>
+  お借りいただいた書籍の返却期限が近づいておりますので、ご案内いたします。</p>
+  <br>
+  <p class="fw-bold">書籍名：『<%= lending.book.title %>』</p>
+  <p class="fw-bold">返却期限：<%= lending.schedule_date.strftime('%Y-%m-%d') %></p>
+  <br>
+  <p>期限までにご返却いただきますようお願いいたします。</p>
+  <p>ご不明な点がございましたら、お気軽にお問い合わせください。</p>
+  <p>今後ともどうぞよろしくお願いいたします。</p>
+<% end %>
