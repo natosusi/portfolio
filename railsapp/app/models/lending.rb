@@ -4,9 +4,9 @@ class Lending < ApplicationRecord
   has_many :notification, dependent: :destroy
   validates :schedule_date, presence: true
 
-  #現在貸出中になっている貸出情報
   scope :currently_lendings, -> {where(returned_date: nil)}
 
-  #貸出中から当日期限のものを取り出す
   scope :due_date, -> {where(returned_date: nil).where(schedule_date: Date.current)} 
+  
+  scope :is_the_day_before_due, -> {where(returned_date: nil).where(schedule_date: Date.current.tomorrow)}
 end
