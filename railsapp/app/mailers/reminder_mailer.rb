@@ -1,6 +1,6 @@
 class ReminderMailer < ApplicationMailer
-  def reminder(email)
-    @lendings = Lending.is_the_day_before_due
-    mail(to: email, subject: '返却期限のお知らせ')
+  def reminder(lending)
+    @lending = lending
+    mail(to: @lending.user.email, subject: "【返却期限のお知らせ】『#{@lending.book.title}』のご返却について")
   end
 end

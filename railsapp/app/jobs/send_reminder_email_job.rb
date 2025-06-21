@@ -9,8 +9,7 @@ class SendReminderEmailJob < ApplicationJob
     end
 
     @lendings.each do |lending|
-      email = lending.user.email
-      ReminderMailer.reminder(email).deliver_later
+      ReminderMailer.reminder(lending).deliver_later
     end
   end
 end
