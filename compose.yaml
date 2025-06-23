@@ -39,7 +39,24 @@ services:
       TZ: 'Asia/Tokyo'
     env_file:
       - .env
+  redis:
+    image: 'redis:7.0-alpine'
+    volumes:
+      - redis_volume:/data
+    command: redis-server --appendonly yes
+    ports:
+      - '6379:6379'
+  sidekiq:
+    build: .
+    command: bundle exec sidekiq
+    volumes:
+      - .:/app
+    depends_on:
+      - db
+      - redis
+
 volumes:
   gemdata:
   node_modules:
   mysqldata:
+  redis_volume:

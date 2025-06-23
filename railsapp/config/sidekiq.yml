@@ -1,0 +1,9 @@
+:concurrency: 1
+:queues:
+  - default
+:scheduler:
+  :schedule:
+    send_email_job:
+      cron: '0 0 * * *'
+      class: SendReminderEmailJob
+      queue: default
