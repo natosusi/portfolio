@@ -1,6 +1,6 @@
 <div id="flash">
 </div>
-
+<% breadcrumb :books_search %>
 <h1 class="fw-bold mb-4">書籍検索・登録</h1>
 
 <%= form_with url: search_books_path, method: :post, data: { turbo_stream: true } do |f| %>
