@@ -12,39 +12,9 @@
 
 <div class= "mb-5">
   <h3 class= "fw-semibold mb-4">貸出履歴</h3>
-  <%= turbo_frame_tag "lending-log" do %>
-    <div class="list-group overflow-y-auto mb-4 list-group-flush rounded border" style="max-height: 500px;">
-      <% if @lendings.any? %>
-        <% @lendings.each do |lending| %>
-          <div class="list-group-item d-flex justify-content-between">
-            <div>
-              <small><%= lending.created_at.strftime('%Y-%m-%d') %></small>
-              <h6 class="mb-3 fw-bold"><%= link_to lending.book.title, book_path(id: lending.book.id), data: { turbo: :false }, class: "link-offset-2 link-underline link-underline-opacity-0" %></h6>
-            </div>
-            <% if lending.returned_date.nil? %>
-              <div class="d-block align-items-center">
-                <div class="mb-2">
-                  <p class="fw-bold mb-1">返却予定日</p>
-                  <small><%= lending.schedule_date.strftime('%Y-%m-%d') %></small>
-                </div>
-                <div>
-                  <%= link_to "返却する", edit_lending_path(lending.book), data: { turbo: :false }, class: "btn btn-outline-primary btn-sm align-items-center", style: "height:max-content;" %>
-                </div>
-              </div>
-            <% else %>
-              <div class="align-items-center">
-                <p class="fw-bold mb-1">返却日</p>
-                <small><%= lending.returned_date %></small>
-              </div>
-            <% end %>
-          </div>
-        <% end %>
-      <% else %>
-        <p class="fs-5 fw-bold">貸出履歴がありません。</p>
-      <% end %>
-    </div>
-    <div class="d-grid d-md-flex justify-content-md-end">
-      <%= paginate @lendings, theme: 'bootstrap-5' %>
+  <%= turbo_frame_tag "lending_log" do %>
+    <div id="log">
+      <%= render partial: "log" %>
     </div>
   <% end %>
 </div>
