@@ -6,7 +6,13 @@ class LendingsController < ApplicationController
   def new
     #貸出情報が1つ以上存在していて、最新の貸出情報の返却日が登録されていない場合
     if @book.lendings.present? && @book.latest_lending.returned_date.blank?
-      redirect_to books_path, alert: 'この本は貸出中です。', status: :see_other and return
+      #@books = Book.includes(:lendings).page(params[:page]).per(9)
+      flash.now[:alert] = 'この本は貸出中です。'
+      render "books/index"
+      #respond_to do |format|
+      #  format.turbo_stream { render turbo_stream: turbo_stream.replace(partial: "layouts/flash") }
+      #end
+      return
     end
     #新たな貸し出し情報に必要な項目（書籍、ログイン中の会員）貸出日はupdated_atレコードの更新日が基準
     @lending = current_user.lendings.new(book: @book)
@@ -42,8 +48,7 @@ class LendingsController < ApplicationController
     if @lending.update(returned_date: Date.current)
       redirect_to(request.referer || books_path, notice: '返却が完了しました。')
     else
-      flash.now[:alert] = '返却に失敗しました。'
-      redirect_to :edit
+      redirect_to(request.referer || books_path, alert: '返却に失敗しました。', status: :see_other)
     end
   end
 
