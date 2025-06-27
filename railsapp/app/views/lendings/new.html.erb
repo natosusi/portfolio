@@ -5,7 +5,7 @@
     <%= f.label "返却予定日", style: "display: block", class: "form-label" %>
     <div class="mb-3">
       <%= f.date_field :schedule_date, min: Date.current, class: "form-control" %>
-      <% if @lending.errors.any? %>
+      <% if @lending.errors[:schedule_date].any? %>
         <p class="fw-bold text-danger" style="font-size: 14px;">返却予定日を指定してください。</p>
       <% end %>
     </div>
