@@ -42,7 +42,7 @@ class LendingsController < ApplicationController
     if @lending.update(returned_date: Date.current)
       redirect_to(request.referer || books_path, notice: '返却が完了しました。')
     else
-      flash.now[:alert] = '返却に失敗しました。'
+      flash[:alert] = '返却に失敗しました。'
       redirect_to :edit
     end
   end
