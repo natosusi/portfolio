@@ -21,7 +21,6 @@ class LendingsController < ApplicationController
     if @lending.save
       redirect_to books_path, notice: '貸出が完了しました。'
     else
-      flash.now[:alert] = '返却予定日を指定してください。'
       render :new, status: :unprocessable_entity
     end
   end
@@ -41,9 +40,9 @@ class LendingsController < ApplicationController
 
     #返却日を現在の日付で登録する
     if @lending.update(returned_date: Date.current)
-      redirect_to books_path, notice: '返却が完了しました。'
+      redirect_to(request.referer || books_path, notice: '返却が完了しました。')
     else
-      flash.now[:alert] = '返却に失敗しました。'
+      flash[:alert] = '返却に失敗しました。'
       redirect_to :edit
     end
   end

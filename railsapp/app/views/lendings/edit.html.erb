@@ -1,8 +1,8 @@
-<h1>書籍返却</h1>
-
+<%= render "layouts/modal", title: "書籍返却" do %>
   <p>タイトル: <%= @book.title %></p>
   <p>返却予定日: <%= @lending.schedule_date %></p>
-  <%= form_with(model: @lending, url: lending_path(@lending.id), method: :patch) do |f| %>
+  <%= form_with(model: @lending, url: lending_path(@lending.id), method: :patch, data: { action: "turbo:submit-end->modal#close" }) do |f| %>
     <p>この本を返却しますか？</p>
     <%= f.submit '確定', class: 'btn btn-primary' %>
+  <% end %>
 <% end %>
