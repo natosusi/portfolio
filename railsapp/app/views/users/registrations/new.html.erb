@@ -1,37 +1,34 @@
+<%= render "users/shared/error_messages", resource: resource %>
 <h2  class="fw-bold mb-3">新規会員登録</h2>
 <div class="card mb-3" style = "max-width: 600px;" >
-<div class="card-body">
-<%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
-  <%= render "users/shared/error_messages", resource: resource %>
+  <div class="card-body">
+    <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
 
-  <div class="field mb-2">
-    <%= f.label :name, style: "display: block", class: "form-label" %>
-    <%= f.text_field :name, autofocus: true, autocomplete: "name", class: "form-control" %>
+      <div class="field mb-2">
+        <%= f.label :name, style: "display: block", class: "form-label" %>
+        <%= f.text_field :name, autofocus: true, autocomplete: "name", class: "form-control" %>
+      </div>
+      <div class="field mb-2">
+        <%= f.label :email, style: "display: block", class: "form-label" %>
+        <%= f.email_field :email, autocomplete: "email", class: "form-control" %>
+      </div>
+
+
+      <div class="field mb-2">
+        <%= f.label :password, style: "display: block", class: "form-label" %>
+        <%= f.password_field :password, autocomplete: "new-password", placeholder: true, class: "form-control" %>
+      </div>
+
+      <div class="field mb-2">
+        <%= f.label :password_confirmation, style: "display: block", class: "form-label" %>
+        <%= f.password_field :password_confirmation, autocomplete: "new-password", class: "form-control" %>
+      </div>
+
+      <div class="action mb-2 d-grid d-md-flex justify-content-md-end">
+        <%= f.submit "会員登録", class: "btn btn-primary" %>
+      </div>
+    <% end %>
+
+    <%= render "users/shared/links" %>
   </div>
-  <div class="field mb-2">
-    <%= f.label :email, style: "display: block", class: "form-label" %>
-    <%= f.email_field :email, autocomplete: "email", class: "form-control" %>
-  </div>
-
-
-  <div class="field mb-2">
-    <%= f.label :password, style: "display: block", class: "form-label" %>
-    <% if @minimum_password_length %>
-    <em>(<%= @minimum_password_length %> characters minimum)</em>
-    <% end %><br />
-    <%= f.password_field :password, autocomplete: "new-password", class: "form-control" %>
-  </div>
-
-  <div class="field mb-2">
-    <%= f.label :password_confirmation, style: "display: block", class: "form-label" %><br />
-    <%= f.password_field :password_confirmation, autocomplete: "new-password", class: "form-control" %>
-  </div>
-
-  <div class="action mb-2">
-    <%= f.submit "会員登録", class: "btn btn-primary" %>
-  </div>
-<% end %>
-
-<%= render "users/shared/links" %>
-</div>
 </div>
