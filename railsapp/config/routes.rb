@@ -2,6 +2,8 @@ require 'sidekiq/web'
 require 'sidekiq-scheduler/web'
 
 Rails.application.routes.draw do
+  root "home#top"
+
   mount LetterOpenerWeb::Engine, at: '/letter_opener' if Rails.env.development?
 
   mount RailsAdmin::Engine => '/admin', as: 'rails_admin'
@@ -20,7 +22,8 @@ Rails.application.routes.draw do
     get 'users/sign_out', to: 'users/sessions#destroy'
   end  
 
-  resources :users, :lendings
+  resources :users, only: [:show]
+  resources :lendings, only: [:new, :create, :edit, :update]
   get  'books/search', to: 'books#search', as: :search_books
   post 'books/search', to: 'books#search'
   resources :books, only: [:index, :create,:show] do
