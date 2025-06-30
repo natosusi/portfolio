@@ -1,4 +1,6 @@
 class BooksController < ApplicationController
+  before_action :check_ability, only: [:search, :create]
+
   #書籍一覧
   def index
     #本のレコードとその本に関する貸出情報をすべて取得
@@ -112,5 +114,9 @@ class BooksController < ApplicationController
   private
   def book_params
     params.require(:book).permit(:title, :author, :description, :image_link)
+  end
+
+  def check_ability
+    authorize! :access, :books_search
   end
 end
