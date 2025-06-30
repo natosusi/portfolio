@@ -8,4 +8,8 @@ class ApplicationController < ActionController::Base
   def get_notifications
     @notifications = current_user&.notifications&.not_returned
   end
+
+  rescue_from CanCan::AccessDenied do |_exception|
+    redirect_to books_path, alert: '画面を閲覧する権限がありません。'
+  end
 end
