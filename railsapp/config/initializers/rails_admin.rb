@@ -10,15 +10,8 @@ RailsAdmin.config do |config|
    config.current_user_method(&:current_user)
 
   ## == CancanCan ==
+   config.parent_controller = 'ApplicationController'
    config.authorize_with :cancancan
-
-   config.authorize_with do
-    begin
-      authorize! :access, :rails_admin
-    rescue CanCan::AccessDenied
-      redirect_to main_app.root_path, alert: '画面を閲覧する権限がありません。'
-    end
-   end
 
   ## == Pundit ==
   # config.authorize_with :pundit

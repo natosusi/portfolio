@@ -10,6 +10,6 @@ class ApplicationController < ActionController::Base
   end
 
   rescue_from CanCan::AccessDenied do |_exception|
-    redirect_to books_path, alert: '画面を閲覧する権限がありません。'
+    redirect_to main_app.books_path, alert: '画面を閲覧する権限がありません。'
   end
 end
