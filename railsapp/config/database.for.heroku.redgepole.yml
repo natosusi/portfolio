@@ -1,0 +1,2 @@
+production:
+  url: <%= ENV["JAWSDB_URL"] %>
