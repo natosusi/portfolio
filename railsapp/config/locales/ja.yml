@@ -1,0 +1,15 @@
+ja:
+  activerecord:
+    models:
+      user: 会員
+    attributes:
+      user:
+        name: 会員名
+        email: メールアドレス
+        encrypted_password: パスワード
+  helpers:
+    placeholder:
+      user:
+        email: 'hogehoge@example.com'
+        name: 'ほげほげ 太郎'
+        password: '6文字以上必要です'

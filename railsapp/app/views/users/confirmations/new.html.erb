@@ -1,16 +1,22 @@
-<h2>Resend confirmation instructions</h2>
+<%= render "users/shared/error_messages", resource: resource %>
 
-<%= form_for(resource, as: resource_name, url: confirmation_path(resource_name), html: { method: :post }) do |f| %>
-  <%= render "users/shared/error_messages", resource: resource %>
+<h2 class="fw-bold mb-3">認証メール再送信</h2>
+<p>認証メールが届かない場合、認証前のメールアドレスを入力してメールを再送信してください。</p>
 
-  <div class="field">
-    <%= f.label :email %><br />
-    <%= f.email_field :email, autofocus: true, autocomplete: "email", value: (resource.pending_reconfirmation? ? resource.unconfirmed_email : resource.email) %>
+<div class="card mb-3" style = "max-width: 600px;" >
+  <div class="card-body">
+    <%= form_for(resource, as: resource_name, url: confirmation_path(resource_name), html: { method: :post }, data: { turbo: false }) do |f| %>
+
+      <div class="field mb-2">
+        <%= f.label :email %>
+        <%= f.email_field :email, autofocus: true, autocomplete: "email", value: (resource.pending_reconfirmation? ? resource.unconfirmed_email : resource.email), class: "form-control" %>
+      </div>
+
+      <div class="actions d-grid d-md-flex justify-content-md-end">
+        <%= f.submit "メール再送信", class: "btn btn-primary" %>
+      </div>
+    <% end %>
+
+    <%= render "users/shared/links" %>
   </div>
-
-  <div class="actions">
-    <%= f.submit "Resend confirmation instructions" %>
-  </div>
-<% end %>
-
-<%= render "users/shared/links" %>
+</div>

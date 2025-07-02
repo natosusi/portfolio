@@ -1,7 +1,11 @@
 ja:
   devise:
+    confirmations:
+      confirmed: 'メールアドレスの確認が完了しました。'
+      send_instructions: '認証用メールを送信しました。数分後にEメールアドレスの確認方法が記載されたメールが届きます。'
     failure:
       invalid: メールアドレスまたはパスワードが正しくありません。
+      unauthenticated: 'ログインしてください。'
     sessions:
       signed_in: ログインに成功しました。本を借りよう！
       signed_out: ログアウトしました。
@@ -9,8 +13,28 @@ ja:
       user:
         signed_up: アカウント登録が完了しました。
       signed_up: アカウント登録が完了しました。
-  errors:
-    messages:
-      not_saved:
-        one: 1件のエラーが発生したため %{resource} は保存されませんでした。
-        other: '%{count} 件のエラーが発生したため %{resource} は保存されませんでした。'
+    mailer:
+      confirmation_instructions:
+        subject: 'メール認証のご案内'
+      reset_password_instructions:
+        subject: 'パスワードをリセットします'
+      unlock_instructions:
+        subject: 'ロック解除のご案内'
+      email_changed:
+        subject: 'メールアドレスを変更しました'
+      password_change:
+        subject: 'パスワードを変更しました'
+    registrations:
+        destroyed: '会員情報を削除しました。ご利用ありがとうございました。'
+        signed_up: '登録完了!本を借りよう！'
+        signed_up_but_inactive: '登録は完了していますが、アカウントが有効化されていません。認証を完了してください。'
+        signed_up_but_locked: '登録は完了していますが、アカウントが有効化されていません。アカウントロックを解除してください。'
+        signed_up_but_unconfirmed: '認証用メールを送信しました。メールから認証を完了してください。'
+        update_needs_confirmation: '変更先メールアドレスに認証用メールを送信しました。メールから変更を完了させてください。'
+        updated: 'アカウント情報を変更しました。'
+        updated_but_not_signed_in: 'アカウントは正常に更新されましたが、パスワードが変更されたため、再度ログインする必要があります。'
+    errors:
+      messages:
+        not_saved:
+          one: '1件のエラーが発生したため %{resource} は保存されませんでした。'
+          other: '%{count} 件のエラーが発生したため %{resource} は保存されませんでした。'

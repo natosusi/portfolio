@@ -51,6 +51,8 @@ test:
 #
 production:
   <<: *default
-  database: railsapp_production
-  username: railsapp
+  database: <%= ENV["RAILSAPP_DATABASE"] %>
+  username: <%= ENV["RAILSAPP_DATABASE_USERNAME"] %>
   password: <%= ENV["RAILSAPP_DATABASE_PASSWORD"] %>
+  host: <%= ENV["RAILSAPP_DATABASE_HOST"] %>
+  url: <%= ENV["JAWSDB_URL"] %>

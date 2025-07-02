@@ -6,7 +6,10 @@ class Ability
   def initialize(user)
     if user.try(:admin?)
       can :access, :rails_admin
+      can :access, :books_search
       can :manage, :all
+    else
+      cannot :access, :books_search
     end
 
 

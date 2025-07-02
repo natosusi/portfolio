@@ -10,6 +10,7 @@ RailsAdmin.config do |config|
    config.current_user_method(&:current_user)
 
   ## == CancanCan ==
+   config.parent_controller = 'ApplicationController'
    config.authorize_with :cancancan
 
   ## == Pundit ==

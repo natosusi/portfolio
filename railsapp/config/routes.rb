@@ -1,25 +1,35 @@
+require 'sidekiq/web'
+require 'sidekiq-scheduler/web'
+
 Rails.application.routes.draw do
-  get "likes/create"
-  get "likes/destroy"
-  get "reviews/create"
+  root "home#top"
+
+  mount LetterOpenerWeb::Engine, at: '/letter_opener' if Rails.env.development?
+
   mount RailsAdmin::Engine => '/admin', as: 'rails_admin'
-  devise_for :users, conttollers:{
-    registrations: 'users/registrations',
-    sessions: 'users/sessions'
+
+  Sidekiq::Web.use(Rack::Auth::Basic) do |user_id, password|
+    [user_id, password] == [ENV['SIDEKIQ_BASIC_ID'], ENV['SIDEKIQ_BASIC_PASSWORD']]
+  end
+  mount Sidekiq::Web, at: '/sidekiq'
+
+  devise_for :users, controllers: {
+    registrations: "users/registrations",
+    sessions: "users/sessions"
   }
-  
-  resources :users, :lendings
+  devise_scope :user do
+    get 'users/sign_in', to: 'users/sessions#new'
+    get 'users/sign_out', to: 'users/sessions#destroy'
+  end  
+
+  resources :users, only: [:show]
+  resources :lendings, only: [:new, :create, :edit, :update]
   get  'books/search', to: 'books#search', as: :search_books
   post 'books/search', to: 'books#search'
-  resources :books, only: [:create,:show] do
+  resources :books, only: [:index, :create,:show] do
     resources :likes, only: [:create,:destroy]
   end
   resources :reviews, only: [:create]
-
-
-  get "login", to: "sessions#new"
-  post "login", to: "sessions#create"
-  delete "logout", to: "sessions#destroy"
 
   get "/" => "home#top"
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html

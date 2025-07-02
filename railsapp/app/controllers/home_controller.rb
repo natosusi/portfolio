@@ -1,5 +1,5 @@
 class HomeController < ApplicationController
+  skip_before_action :authenticate_user!
   def top
-    puts "topが呼び出された"
   end
 end

@@ -1,7 +1,8 @@
 # frozen_string_literal: true
 
 class Users::SessionsController < Devise::SessionsController
-  before_action :configure_sign_in_params, if: :devise_controller?
+  include NotificationCreator
+  #before_action :configure_sign_in_params, if: :devise_controller?
 
   # GET /resource/sign_in
   # def new
@@ -9,9 +10,10 @@ class Users::SessionsController < Devise::SessionsController
   # end
 
   # POST /resource/sign_in
-  # def create
-  #   super
-  # end
+  def create
+    super
+    create_notification
+  end
 
   # DELETE /resource/sign_out
   # def destroy
@@ -26,12 +28,10 @@ class Users::SessionsController < Devise::SessionsController
   # end
 
   def after_sign_in_path_for(resource)
-    puts "★after_sign_in_path_forが呼び出された"
-    user_path(current_user.id)
+    books_path
   end
 
   def after_sign_out_path_for(resource_or_scope)
-    puts "★after_sign_out_path_forが呼び出された"
     new_user_session_path
   end
 end

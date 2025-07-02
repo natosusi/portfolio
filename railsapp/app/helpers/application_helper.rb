@@ -16,5 +16,4 @@ module ApplicationHelper
   def schedule_date_for_lending(book)
     book.latest_lending&.schedule_date
   end
-
 end
