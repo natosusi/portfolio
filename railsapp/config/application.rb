@@ -35,5 +35,6 @@ module Railsapp
     end
 
     config.active_job.queue_adapter = :sidekiq
+    config.assets.initialize_on_precompile = false
   end
 end
