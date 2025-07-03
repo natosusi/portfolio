@@ -50,9 +50,4 @@ test:
 # for a full overview on how database connection configuration can be specified.
 #
 production:
-  <<: *default
-  database: <%= ENV["RAILSAPP_DATABASE"] %>
-  username: <%= ENV["RAILSAPP_DATABASE_USERNAME"] %>
-  password: <%= ENV["RAILSAPP_DATABASE_PASSWORD"] %>
-  host: <%= ENV["RAILSAPP_DATABASE_HOST"] %>
-  url: <%= ENV["JAWSDB_URL"] %>
+  url: <%= ENV['JAWSDB_URL']&.sub(/\Amysql/, 'mysql2') %>
