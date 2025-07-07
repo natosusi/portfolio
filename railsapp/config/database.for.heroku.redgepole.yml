@@ -1,2 +1,2 @@
 production:
-  url: <%= ENV["JAWSDB_URL"] %>
+  url: <%= ENV['JAWSDB_URL']&.sub(/\Amysql/, 'mysql2') %>
