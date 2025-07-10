@@ -17,10 +17,12 @@
     <%= javascript_include_tag "application", "data-turbo-track": "reload", type: "module" %>
   </head>
 
-  <body class="bg-body-tertiary">
+  <body class="d-flex flex-column vh-100">
     <nav class="navbar navbar-expand-lg bg-dark" data-bs-theme="dark">
       <div class="container-xxl bd-gutter flex-wrap flex-lg-nowrap">
-        <%= link_to "Library-record", books_path, class: "navbar-brand fw-bold" %>
+        <%= link_to root_path do %>
+          <%= image_tag 'library-record_logo_n.png', style: "height: 64px;" %>
+        <% end %>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
@@ -32,13 +34,6 @@
             </li>
             <li class="nav-item">
               <%= link_to "書籍一覧", books_path, class: "nav-link" %>
-            </li>
-          <% else %>
-            <li class="nav-item">
-              <%= link_to "ログイン", new_user_session_path, class: "nav-link" %>
-            </li>
-            <li class="nav-item">
-              <%= link_to "新規登録", new_user_registration_path, class: "nav-link" %>
             </li>
           <% end %>
           
@@ -98,11 +93,20 @@
                 </div>
               </li>
             </ul>
+          <% else %>
+            <ul class="navbar-nav gap-3 align-items-center">
+              <li class="nav-item">
+                <%= link_to "ログイン", new_user_session_path, class: "btn btn-secondary" %>
+              </li>
+              <li class="nav-item">
+                <%= link_to "新規登録", new_user_registration_path, class: "btn btn-primary" %>
+              </li>
+            </ul>
           <% end %>
         </div>
       </div>
     </nav>
-    <div class = "container-sm" style = "padding-top: 80px;">
+    <div class="container-sm pt-5">
       <% if flash[:notice] %>
         <div id="flash" class="alert alert-success alert-dismissible fade show" role="alert">
           <%= flash[:notice] %><button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
@@ -114,10 +118,13 @@
         </div>
       <% end %>
     </div>
-    <div class = "container-sm" style= "margin: 0 auto;">
-      <%= breadcrumbs separator: " &rsaquo; ", class: "mb-3"  %>
+    <main class="container-sm py-5 mb-auto">
       <%= yield %>
-    </div>
-    <%= turbo_frame_tag "modal" %>
+    </main>
+    <footer class="footer bg-body-tertiary mt-auto py-3">
+      <div class="container">
+        <p class="text-center m-0" style="font-size:12px;">&copy; 2025 Library-record</p>
+      </div>
+    </footer>
   </body>
 </html>
