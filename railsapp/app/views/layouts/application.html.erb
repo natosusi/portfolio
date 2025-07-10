@@ -20,25 +20,20 @@
   <body class="bg-body-tertiary">
     <nav class="navbar navbar-expand-lg bg-dark" data-bs-theme="dark">
       <div class="container-xxl bd-gutter flex-wrap flex-lg-nowrap">
-        <%= link_to "Library-record", books_path, class: "navbar-brand fw-bold" %>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
+        <% if user_signed_in? %>
+          <%= link_to books_path do %>
+            <%= image_tag 'library-record_logo_n.png', style: "height: 64px;" %>
+          <% end %>
+        <% else %>
+          <%= link_to root_path do %>
+            <%= image_tag 'library-record_logo_n.png', style: "height: 64px;" %>
+          <% end %>
+        <% end %>
         <div class="collapse navbar-collapse" id="navbarText">
           <ul class="navbar-nav me-auto mb-2 mb-lg-0">
           <% if user_signed_in? %>
             <li class="nav-item">
-              <%= link_to "ログアウト", destroy_user_session_path, method: :delete, data: { turbo_method: :delete }, class: "nav-link" %>
-            </li>
-            <li class="nav-item">
               <%= link_to "書籍一覧", books_path, class: "nav-link" %>
-            </li>
-          <% else %>
-            <li class="nav-item">
-              <%= link_to "ログイン", new_user_session_path, class: "nav-link" %>
-            </li>
-            <li class="nav-item">
-              <%= link_to "新規登録", new_user_registration_path, class: "nav-link" %>
             </li>
           <% end %>
           
@@ -54,13 +49,8 @@
           <% if user_signed_in? %>
             <ul class="navbar-nav gap-3 align-items-center">
               <li class="nav-item">
-                <span class="navbar-text">
-                  <small>ログイン中:</small><%= link_to current_user.name, user_path(current_user), class: "nav-link p-0" %>
-                </span>
-              </li>
-              <li class="nav-item">
                 <div class="dropdown" data-bs-theme="light">
-                  <button type="button" class="btn btn-light btn-sm position-relative dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" data-bs-auto-close="outside">
+                  <button type="button" class="btn btn-dark position-relative" data-bs-toggle="dropdown" aria-expanded="false" data-bs-auto-close="outside">
                     <i class="bi bi-bell-fill"></i>
                     <% if @notifications.any? %>
                       <span class="position-absolute top-0 start-100 translate-middle bg-danger border border-light rounded-circle" style= "padding: 0.4rem">
@@ -97,7 +87,30 @@
                   </div>
                 </div>
               </li>
+              <li class="nav-item dropdown" data-bs-theme="light">
+                <button class="btn btn-dark" data-bs-toggle="dropdown" aria-expanded="false">
+                  <i class="bi bi-person-circle"></i>
+                </button>
+                <ul class="dropdown-menu">
+                  <li><span class="dropdown-header">ログイン中：<%= current_user.name %></span></li>
+                  <li><%= link_to "会員詳細", user_path(current_user), class: "dropdown-item" %></li>
+                  <li>
+                  <%= link_to destroy_user_session_path, method: :delete, data: { turbo_method: :delete }, class: "dropdown-item" do %>
+                    <i class="bi bi-box-arrow-right me-2"></i>ログアウト
+                  <% end %>
+                  </li>
+                </ul>
+              </li>
             </ul>
+            <% else %>
+              <ul class="navbar-nav gap-3 align-items-center">
+                <li class="nav-item">
+                  <%= link_to "ログイン", new_user_session_path, class: "btn btn-secondary" %>
+                </li>
+                <li class="nav-item">
+                  <%= link_to "新規登録", new_user_registration_path, class: "btn btn-primary" %>
+                </li>
+              </ul>
           <% end %>
         </div>
       </div>
@@ -114,10 +127,10 @@
         </div>
       <% end %>
     </div>
-    <div class = "container-sm" style= "margin: 0 auto;">
+    <main class="container-sm" style= "margin: 0 auto;">
       <%= breadcrumbs separator: " &rsaquo; ", class: "mb-3"  %>
       <%= yield %>
-    </div>
+    </main>
     <%= turbo_frame_tag "modal" %>
   </body>
 </html>
