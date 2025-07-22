@@ -1,27 +1,81 @@
-# README
+# library-record
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+社内や身近な人の書籍の**貸出・返却管理**を行うWebアプリケーションです。  
+貸した・借りた書籍の状況が可視化されることで、管理者不在でも簡単に本の貸し借りが完結します。
 
-Things you may want to cover:
+---
 
-- Ruby version
+## アプリURL
+https://library-record-b4c6e8f9189b.herokuapp.com/
 
-- System dependencies
+---
+## 📚 目的
 
-- Configuration
+- 書籍の貸出・返却を記録・管理
+- 誰が何を借りているか、返却予定日がいつかを可視化
+- 管理担当者不在でも、借りる人だけで完結可能
 
-- Database creation
+---
 
-- Database initialization
+## 🛠 開発環境
 
-- How to run the test suite
+- Ruby 3.4.2
+- Rails 7.2.2.1
+- Docker
 
-- Services (job queues, cache servers, search engines, etc.)
+---
 
-- Deployment instructions
+## 🚀 主な機能
 
-- ...
+- ログイン／ログアウト
+- 会員登録
+- 貸出登録／返却登録
+- お気に入り登録・お気に入り一覧の確認
+- 貸出履歴の確認
+- レビュー投稿
+- 返却期限当日の通知（アプリ内）
+- 返却期限前日の通知（メール）
+
+**管理者のみ：**
+- 書籍検索・登録
+- 管理画面(rails_admin)
+
+---
+
+## 📝 基本的な使い方
+
+### 書籍の登録（管理者）
+
+1. 管理者アカウントでログイン  
+2. 書籍検索・登録画面でISBN（13桁）を入力し「検索」
+3. 検索結果を確認し「書籍登録」ボタンでアプリ内に書籍の情報を登録
+
+### 本を借りる（一般ユーザー）
+
+1. 一般ユーザーでログイン  
+2. 書籍一覧から希望の本を選び「借りる」
+3. 返却予定日を指定して貸出登録
+
+### 本を返却
+
+1. ログイン後、書籍一覧または会員詳細ページの貸出履歴から「返却」ボタンで返却登録
+
+---
+
+## 🗂 今後の課題・追加予定機能
+
+- 検索機能の拡充
+- 書籍一覧のソート
+- レビュー評価機能（共感・役に立った等）
+- 書籍のカテゴリー管理
+
+---
+
+## ⚠️ 備考
+
+- 登録時メール認証、返却期限メール通知は**現在、開発環境のみ**です（実際のメール送信は行われません）。
+
+---
 
 ## 初期構築
 
