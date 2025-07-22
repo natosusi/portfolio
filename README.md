@@ -94,14 +94,3 @@ https://library-record-b4c6e8f9189b.herokuapp.com/
 ## ⚠️ 備考
 
 - アカウント登録・メールアドレス変更時のメール認証、返却期限メール通知は**現在、開発環境のみ**です（実際のメール送信は行われません）。
-
----
-
-## 初期構築
-
-1. library-record 配下に.env に API_KEY コピー
-2. docker compose run webapp bundle install
-3. docker compose build
-4. docker compose run --rm webapp rails assets:precompile
-5. docker compose run webapp rails db:reset
-6. docker compose up
